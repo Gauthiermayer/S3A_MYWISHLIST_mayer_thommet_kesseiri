@@ -2,3 +2,5 @@
 /vendor
 .gitignore
 /src/conf/conf.ini
+
+.idea/
