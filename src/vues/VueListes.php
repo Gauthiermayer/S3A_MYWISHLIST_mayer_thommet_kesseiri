@@ -19,7 +19,7 @@ class VueListes
         $this->app = \Slim\Slim::getInstance() ;
     }
 
-    public function afficher(){
+    private function afficherHeader(){
         echo
 <<<END
 <!doctype html>
@@ -34,15 +34,28 @@ class VueListes
         <body>
 END;
 
-        if ($this->liste != NULL){
-            foreach ($this->liste as $key => $l){
+    }
+
+    private function afficherFooter(){
+        echo
+<<<END
+        </body>
+    </html>
+END;
+    }
+
+
+    private function afficherToutesListes()
+    {
+        if ($this->liste != NULL) {
+            foreach ($this->liste as $key => $l) {
                 //$rootUri = $this->app->request->getRootUri() ;
-                $listeUrl = $this->app->urlFor('route_liste', ['id_liste'=> $l['no']] ) ;
+                $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['no']]);
                 $num = $l['no'];
                 $titre = $l['titre'];
                 $desc = $l['description'];
                 $user_id = $l['user_id'];
-                
+
                 echo
 <<<END
         <div class="liste">
@@ -50,15 +63,47 @@ END;
         </div>
 
 END;
-
             }
         }
+    }
 
-        echo
+    private function afficherAllItems(){
+        if ($this->liste != NULL) {
+            foreach ($this->liste as $key => $items) {
+                //$rootUri = $this->app->request->getRootUri() ;
+                $itemUrl = $this->app->urlFor('route_item', ['id_liste' => $items['liste_id'], 'id_item' => $items['id']]);
+                $num = $items['id'];
+                $titre = $items['nom'];
+                $desc = $items['descr'];
+                $tarif = $items['tarif'];
+
+                echo
 <<<END
-        </body>
-    </html>
-END;
+        <div class="item">
+            <a href=" $itemUrl">  $num . $titre : $desc ==> $tarif €. </a>
+        </div>
 
+END;
+            }
+        }
+    }
+
+    public function afficher($type){
+
+        //afficher le header
+        $this->afficherHeader();
+
+        //affiche le contenu
+        switch ($type){
+            case 1:
+                $this->afficherToutesListes();
+                break;
+            case 2:
+                $this->afficherAllItems();
+                break;
+        }
+
+        //affiche le footer
+        $this->afficherFooter();
     }
 }
