@@ -9,7 +9,7 @@ Database::connect();
 $app = new \Slim\Slim();
 
 $app->get('/', function() {
-    echo "Home";
+    ControleurListes::default();
 });
 
 $app->get('/listes/', function() {

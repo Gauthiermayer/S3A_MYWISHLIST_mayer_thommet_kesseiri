@@ -10,6 +10,10 @@ use mywishlist\vues\VueListes;
 
 class ControleurListes
 {
+    public static function default(){
+        $vue = new VueListes(null);
+        $vue->afficher(1);
+    }
     public static function getListes()
     {
         $liste = Liste::all()->toArray();

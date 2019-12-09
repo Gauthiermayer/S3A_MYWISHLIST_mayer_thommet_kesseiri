@@ -20,6 +20,7 @@ class VueListes
     }
 
     private function afficherHeader(){
+        $rootUri = $this->app->request->getRootUri() ;
         echo
 <<<END
 <!doctype html>
@@ -28,10 +29,19 @@ class VueListes
             <meta charset=\"UTF-8\">
             <meta name=\"viewport\" content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">
             <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">
-            <LINK href="styles/view-listes.css" rel="stylesheet" type="text/css">
+            <LINK href="$rootUri/styles/view-listes.css" rel="stylesheet" type="text/css">
             <title>Toutes les wishlist </title>
         </head>
         <body>
+
+        <div class="header">
+          <a href="#default" class="logo">Test</a>
+          <div class="header-right">
+            <a href="$rootUri/">Home</a>
+            <a href="$rootUri/listes">Wishlist</a>
+            <a href="#about">About</a>
+          </div>
+        </div>
 END;
 
     }
@@ -100,6 +110,9 @@ END;
                 break;
             case 2:
                 $this->afficherAllItems();
+                break;
+            default:
+                //fait rien
                 break;
         }
 
