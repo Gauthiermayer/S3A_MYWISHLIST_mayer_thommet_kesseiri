@@ -2,6 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
+use mywishlist\controleurs\ControleurHome;
 use mywishlist\controleurs\ControleurListes;
 use mywishlist\conf\Database;
 
@@ -9,7 +10,7 @@ Database::connect();
 $app = new \Slim\Slim();
 
 $app->get('/', function() {
-    ControleurListes::default();
+    ControleurHome::default();
 });
 
 $app->get('/listes/', function() {

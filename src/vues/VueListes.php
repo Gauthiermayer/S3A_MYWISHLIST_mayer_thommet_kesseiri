@@ -77,9 +77,6 @@ END;
             case 2:
                 $this->afficherAllItems();
                 break;
-            default:
-                VueHeaderFooter::afficherHeader("home");
-                break;
         }
 
         //affiche le footer
