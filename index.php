@@ -11,7 +11,7 @@ $app = new \Slim\Slim();
 
 $app->get('/', function() {
     ControleurHome::default();
-});
+})->name('default');
 
 $app->get('/listes/', function() {
     //echo "Affiche toutes les listes";
@@ -24,7 +24,8 @@ $app->get('/liste/:id_liste', function($id_liste) {
 })->name('route_liste');
 
 $app->get('/liste/:id_liste/item/:id_item', function($id_liste, $id_item) {
-    echo "Affiche l'item ".$id_item." de la liste ".$id_liste;
+    //echo "Affiche l'item ".$id_item." de la liste ".$id_liste;
+    ControleurListes::getItem($id_item);
 })->name('route_item');
 $app->run();
 

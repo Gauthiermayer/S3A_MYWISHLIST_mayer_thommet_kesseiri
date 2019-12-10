@@ -1,6 +1,4 @@
-div.liste > a {
-    font-family: cursive;
-}
+@import url(https://fonts.googleapis.com/css?family=Raleway);
 
 * {box-sizing: border-box;}
 
@@ -56,3 +54,6 @@ body {
         float: none;
     }
 }
+
+
+/*FOOTER*/
