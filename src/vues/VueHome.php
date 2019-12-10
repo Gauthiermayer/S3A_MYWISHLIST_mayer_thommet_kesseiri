@@ -16,9 +16,7 @@ class VueHome {
     public function afficherDefaultHome() {
         VueHeaderFooter::afficherHeader('home');
 
-
-
-
+        //TODO
 
         VueHeaderFooter::afficherFooter();
     }

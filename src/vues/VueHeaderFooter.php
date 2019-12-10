@@ -11,7 +11,6 @@ class VueHeaderFooter
 
 
     public static function afficherHeader($active){
-
         $app = \Slim\Slim::getInstance() ;
         $rootUri = $app->request->getRootUri() ;
         $header =
@@ -22,7 +21,7 @@ class VueHeaderFooter
             <meta charset=\"UTF-8\">
             <meta name=\"viewport\" content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">
             <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">
-            <LINK href="$rootUri/styles/view-listes.css" rel="stylesheet" type="text/css">
+            <LINK href="$rootUri/styles/$active.css" rel="stylesheet" type="text/css">
             <title>Toutes les wishlist </title>
         </head>
         <body>
