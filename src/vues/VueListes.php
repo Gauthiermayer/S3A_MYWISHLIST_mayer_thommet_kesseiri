@@ -83,7 +83,7 @@ END;
 <<<END
 <div class="col mb-4">
 <div class="card h-100 m-3" style="width: 18rem;">
-  <img class="card-img-top m-auto" src="$routeImg" alt="TODO AJOUTER IMAGE DEFAULT SI PAS D'IMAGE ASOOCIEE" style="width: 17.9rem;height: 180px ">  
+  <img class="card-img-top m-auto" src="$routeImg" alt=$desc style="width: 17.9rem;height: 180px ">  
 
       <div class="card-body">
         <h5 class="card-title">$titre</h5>
@@ -112,13 +112,17 @@ END;
             $titre = $item['nom'];
             $desc = $item['descr'];
             $tarif = $item['tarif'];
-            $img = $item['img'];
-            $routeImg = $rootUri . '/img/' . $img;
+
+            $routeImg = $rootUri . '/img/' . 'defaut.jpg';
+            if (isset($item['img'])) {
+                $img = $item['img'];
+                $routeImg = $rootUri . '/img/' . $img;
+            }
 
             echo
             <<<END
 <div class="card m-lg-5 ">
-  <img src="$routeImg" class="card-img-top align-self-center" alt="TODO DEFAULT" style="height:50%;width: 50%">
+  <img src="$routeImg" class="card-img-top align-self-center" alt=$desc style="height:50%;width: 50%">
   <div class="card-body">
     <h5 class="card-title">$titre</h5>
     <h4>$tarif €</h4>
