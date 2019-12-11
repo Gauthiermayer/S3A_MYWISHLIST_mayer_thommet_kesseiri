@@ -38,7 +38,6 @@ class VueHeaderFooter
 END;
 
         echo str_replace("class=\"" .$active."\"", "class=\"active\"",$header);
-
     }
 
     public static function afficherFooter(){

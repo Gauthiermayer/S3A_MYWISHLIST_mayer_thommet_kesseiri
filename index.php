@@ -14,7 +14,7 @@ $app->get('/', function() {
 })->name('default');
 
 $app->get('/login', function() {
-    echo'login';
+    \mywishlist\controleurs\ControleurLogin::pageConnexion();
 })->name('login');
 
 $app->get('/listes/', function() {
