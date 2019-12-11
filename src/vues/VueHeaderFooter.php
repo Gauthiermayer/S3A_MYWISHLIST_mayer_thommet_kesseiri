@@ -32,7 +32,7 @@ class VueHeaderFooter
           <div class="header-right">
             <a class="home" href="$rootUri/">Home</a>
             <a class="wishlist" href="$rootUri/listes">Wishlist</a>
-            <a class="login" href="#TODO">Login</a>
+            <a class="login" href="$rootUri/login">Login</a>
           </div>
         </div>
 END;
