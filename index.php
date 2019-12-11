@@ -13,6 +13,10 @@ $app->get('/', function() {
     ControleurHome::default();
 })->name('default');
 
+$app->get('/login', function() {
+    echo'login';
+})->name('login');
+
 $app->get('/listes/', function() {
     //echo "Affiche toutes les listes";
     ControleurListes::getListes();
