@@ -72,8 +72,12 @@ END;
                 $titre = $items['nom'];
                 $desc = $items['descr'];
                 $tarif = $items['tarif'];
-                $img = $items['img'];
-                $routeImg = $rootUri.'/img/'.$img;
+
+                $routeImg = $rootUri . '/img/' . 'defaut.jpg';
+                if (isset($items['img'])) {
+                    $img = $items['img'];
+                    $routeImg = $rootUri . '/img/' . $img;
+                }
 
                 echo
 <<<END
