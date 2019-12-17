@@ -20,7 +20,11 @@ $app->get('/login', function() {
 $app->get('/listes/', function() {
     //echo "Affiche toutes les listes";
     ControleurListes::getListes();
-});
+})->name('listes');
+
+$app->get('/liste/create', function() {
+    echo 'création d une liste';
+})->name('creation_liste');
 
 $app->get('/liste/:id_liste', function($id_liste) {
     //echo "Affiche tous les items de la liste ".$id_liste;
@@ -31,5 +35,12 @@ $app->get('/liste/:id_liste/item/:id_item', function($id_liste, $id_item) {
     //echo "Affiche l'item ".$id_item." de la liste ".$id_liste;
     ControleurListes::getItem($id_item);
 })->name('route_item');
+
+
+
+
+
 $app->run();
+
+
 

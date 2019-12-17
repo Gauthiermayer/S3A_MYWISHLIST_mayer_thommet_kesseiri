@@ -33,21 +33,24 @@ class VueListes
         <ul class="list-group">
 END;
             foreach ($this->liste as $key => $l) {
-                //$rootUri = $this->app->request->getRootUri() ;
-                $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['no']]);
-                $num = $l['no'];
-                $titre = $l['titre'];
-                $desc = $l['description'];
-                $user_id = $l['user_id'];
-                $nb_items = Item::all()->where('liste_id','=',$num)->count();
+                if($l['private'] != 1) {
 
-                echo
-<<<END
+                    //$rootUri = $this->app->request->getRootUri() ;
+                    $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['no']]);
+                    $num = $l['no'];
+                    $titre = $l['titre'];
+                    $desc = $l['description'];
+                    $user_id = $l['user_id'];
+                    $nb_items = Item::all()->where('liste_id', '=', $num)->count();
+
+                    echo
+                    <<<END
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href=" $listeUrl"> $titre : $desc par $user_id.</a>
              <span class="badge badge-primary badge-pill">$nb_items items</span>
         </li>
 END;
+                }
             }
             echo
 <<<END
@@ -120,7 +123,7 @@ END;
             }
 
             echo
-            <<<END
+<<<END
 <div class="card m-lg-5 ">
   <img src="$routeImg" class="card-img-top align-self-center" alt=$desc style="height:50%;width: 50%">
   <div class="card-body">

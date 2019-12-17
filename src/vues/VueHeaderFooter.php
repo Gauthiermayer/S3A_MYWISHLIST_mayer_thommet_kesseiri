@@ -23,18 +23,20 @@ class VueHeaderFooter
             <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">
             <link href="$rootUri/styles/bootstrap.css" rel="stylesheet" type="text/css">
             <link href="$rootUri/styles/header-footer.css" rel="stylesheet" type="text/css">
-            <title>Toutes les wishlist </title>
+            <title>Wishlist</title>
         </head>
-        <body>
+        <body class="">
 
         <div class="header">
           <a href="#default" class="logo">MyWishlist</a>
           <div class="header-right">
             <a class="home" href="$rootUri/">Home</a>
             <a class="wishlist" href="$rootUri/listes">Wishlist</a>
+            <a class="create" href="$rootUri/liste/create">Nouvelle liste</a>
             <a class="login" href="$rootUri/login">Login</a>
           </div>
         </div>
+
 END;
 
         echo str_replace("class=\"" .$active."\"", "class=\"active\"",$header);
@@ -45,11 +47,11 @@ END;
 <<<END
         </body>
         <!-- Footer -->
-        <footer class="page-footer font-small blue">
+        <footer class="container-fluid position-absolute" style="background-color: #005cbf">
         
           <!-- Copyright -->
-          <div class="footer-copyright text-center py-3">© 2018 Copyright:
-            <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+          <div class="text-center py-3">© 2019 Copyright:
+            <a href="http://www.google.fr"> Github.com</a>
           </div>
           <!-- Copyright -->
         
