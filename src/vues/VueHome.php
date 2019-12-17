@@ -19,7 +19,7 @@ class VueHome {
         echo
         <<<END
              <header class="main">
-              <div class="container h-100">
+              <div class="container h-75">
                 <div class="row h-100 align-items-center">
                   <div class="col-12 text-center">
                     <h1 class="font-weight-light">MyWishList</h1>

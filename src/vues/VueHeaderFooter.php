@@ -58,7 +58,7 @@ END;
 <<<END
         </body>
         <!-- Footer -->
-        <footer class="container-fluid position-absolute" style="background-color: #005cbf">
+        <footer class="footer" style="background-color: #005cbf">
         
           <!-- Copyright -->
           <div class="text-center py-3">© 2019 Copyright:
