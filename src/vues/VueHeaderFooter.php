@@ -10,7 +10,7 @@ class VueHeaderFooter
 
 
 
-    public static function afficherHeader($active){
+    public static function afficherHeader($active, $css = null){
         $app = \Slim\Slim::getInstance() ;
         $rootUri = $app->request->getRootUri() ;
         $header =
@@ -23,6 +23,17 @@ class VueHeaderFooter
             <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">
             <link href="$rootUri/styles/bootstrap.css" rel="stylesheet" type="text/css">
             <link href="$rootUri/styles/header-footer.css" rel="stylesheet" type="text/css">
+END;
+
+        //------------------- Ajoute le css en param -------------------\\
+        if (!is_null($css))
+            $header = $header . <<<END
+            <link href="$rootUri/styles/$css" rel="stylesheet" type="text/css">
+END;
+        //------------------- Ajoute le css en param -------------------\\
+
+        $header = $header .
+            <<<END
             <title>Wishlist</title>
         </head>
         <body class="">
