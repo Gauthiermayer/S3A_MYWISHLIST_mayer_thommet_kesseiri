@@ -2,9 +2,11 @@
 
 require_once 'vendor/autoload.php';
 
+use mywishlist\controleurs\ControleurEditionListe;
 use mywishlist\controleurs\ControleurHome;
 use mywishlist\controleurs\ControleurListes;
 use mywishlist\conf\Database;
+use mywishlist\controleurs\ControleurLogin;
 
 Database::connect();
 $app = new \Slim\Slim();
@@ -14,7 +16,7 @@ $app->get('/', function() {
 })->name('default');
 
 $app->get('/login', function() {
-    \mywishlist\controleurs\ControleurLogin::pageConnexion();
+    ControleurLogin::pageConnexion();
 })->name('login');
 
 $app->get('/listes/', function() {
@@ -22,9 +24,15 @@ $app->get('/listes/', function() {
     ControleurListes::getListes();
 })->name('listes');
 
+$app->post('/liste/create', function() {
+    ControleurEditionListe::creerListe();
+});
+
 $app->get('/liste/create', function() {
-    echo 'création d une liste';
+    //echo 'création d une liste';
+    ControleurEditionListe::afficherCreerListe();
 })->name('creation_liste');
+
 
 $app->get('/liste/:id_liste', function($id_liste) {
     //echo "Affiche tous les items de la liste ".$id_liste;
