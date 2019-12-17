@@ -29,6 +29,21 @@ INTO
     `url`,
     `tarif`
   )
+
+SET  sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+DROP TABLE IF EXISTS `reservation`;
+CREATE TABLE IF NOT EXISTS `reservation`
+(
+    `idItem`      int(11)      NOT NULL,
+    `idListe`     int(11)      NOT NULL,
+    `message`     varchar(250) NOT NULL,
+    `tokenReserv` varchar(100) NOT NULL
+)
 VALUES(
   1,
   2,
@@ -226,3 +241,9 @@ VALUES(
   ''2017-12-12'',
   ''nosecure3''
 );
+
+
+
+
+
+
