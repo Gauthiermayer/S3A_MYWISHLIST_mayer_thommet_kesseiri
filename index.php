@@ -26,6 +26,7 @@ $app->get('/listes/', function() {
 
 $app->post('/liste/create', function() {
     ControleurEditionListe::creerListe();
+    ControleurEditionListe::afficherCreerListe();
 });
 
 $app->get('/liste/create', function() {

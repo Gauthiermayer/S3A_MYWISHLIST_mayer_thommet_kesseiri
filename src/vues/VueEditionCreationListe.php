@@ -26,10 +26,17 @@ class VueEditionCreationListe
     <label for="liste_desc">Description</label>
     <input type="text" class="form-control" name="liste_desc" id="liste_desc" placeholder="Description">
   </div>
+  
+  <div class="form-group">
+    <label for="date">Date d'expiration</label>  
+    <input size="16" class="form-control" type="text" placeholder="31/12/2099" name ="date">    
+  </div> 
+   
   <div class="form-check">
     <input type="checkbox" name="private" class="form-check-input" id="private">
     <label class="form-check-label" for="private">Privée</label>
   </div>
+    
   <button type="submit" class="btn btn-primary mb-3 mt-3">Envoyer</button>
 </form>  
 

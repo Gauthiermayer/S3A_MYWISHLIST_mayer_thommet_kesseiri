@@ -8,16 +8,16 @@ use mywishlist\models\Item;
 
 class VueListes
 {
-    private $liste;
+    private $params;
     private $app;
 
     /**
      * VueListe constructor.
      * @param $liste
      */
-    public function __construct($liste)
+    public function __construct($params)
     {
-        $this->liste = $liste;
+        $this->params = $params;
         $this->app = \Slim\Slim::getInstance() ;
     }
 
@@ -26,25 +26,25 @@ class VueListes
 
     private function afficherToutesListes()
     {
-        if ($this->liste != NULL) {
+        if ($this->params != NULL) {
             echo
 <<<END
 <div class="m-3">
         <ul class="list-group">
 END;
-            foreach ($this->liste as $key => $l) {
-                if($l['private'] != 1) {
+            foreach ($this->params['listes'] as $key => $l) {
+                if($l['liste']['private'] != 1) {
 
                     //$rootUri = $this->app->request->getRootUri() ;
-                    $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['no']]);
-                    $num = $l['no'];
-                    $titre = $l['titre'];
-                    $desc = $l['description'];
-                    $user_id = $l['user_id'];
-                    $nb_items = Item::all()->where('liste_id', '=', $num)->count();
+                    $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['liste']['no']]);
+                    $num = $l['liste']['no'];
+                    $titre = $l['liste']['titre'];
+                    $desc = $l['liste']['description'];
+                    $user_id = $l['liste']['user_id'];
+                    $nb_items = $l['nb'];
 
                     echo
-                    <<<END
+<<<END
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href=" $listeUrl"> $titre : $desc par $user_id.</a>
              <span class="badge badge-primary badge-pill">$nb_items items</span>
@@ -62,19 +62,21 @@ END;
     }
 
     private function afficherAllItems(){
-        if ($this->liste != NULL) {
+        if ($this->params != NULL) {
             echo
 <<<END
 <div class="row row-cols-1 row-cols-md-3 ml-5 mr-5">
 END;
 
-            foreach ($this->liste as $key => $items) {
+            foreach ($this->params['items'] as $key => $items) {
                 $rootUri = $this->app->urlFor('default', []);
                 $itemUrl = $this->app->urlFor('route_item', ['id_liste' => $items['liste_id'], 'id_item' => $items['id']]);
                 $num = $items['id'];
                 $titre = $items['nom'];
                 $desc = $items['descr'];
-                $tarif = $items['tarif'];
+                if (strlen($desc) > 60){
+                    $desc = substr_replace($desc,'..',60);
+                }
 
                 $routeImg = $rootUri . '/img/' . 'defaut.jpg';
                 if (isset($items['img'])) {
@@ -107,11 +109,9 @@ END;
     }
 
     private function afficherItem(){
-        if ($this->liste != NULL) {
-            foreach ($this->liste as $key => $val){
-                $item = $val;
-            }
+        if ($this->params['item'] != NULL) {
             $rootUri = $this->app->urlFor('default', []);
+            $item = $this->params['item'];
             $titre = $item['nom'];
             $desc = $item['descr'];
             $tarif = $item['tarif'];
@@ -122,6 +122,15 @@ END;
                 $routeImg = $rootUri . '/img/' . $img;
             }
 
+            $reservation = '<a href="#" class="btn btn-primary">Réserver</a>';
+            if (isset($_COOKIE['created'])) {
+
+                $created = unserialize($_COOKIE['created']);
+                if (in_array($this->params['token_list'], $created)) {
+                    $reservation = '<a href="#" class="btn btn-primary disabled">Réserver</a>';
+                }
+            }
+
             echo
 <<<END
 <div class="card m-lg-5 ">
@@ -130,7 +139,7 @@ END;
     <h5 class="card-title">$titre</h5>
     <h4>$tarif €</h4>
     <p class="card-text">$desc</p>
-    <a href="#" class="btn btn-primary">Réserver</a>
+    $reservation
   </div>
 </div>
 END;

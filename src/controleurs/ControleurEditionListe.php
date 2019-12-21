@@ -18,14 +18,14 @@ class ControleurEditionListe
     public static function creerListe(){
         //var_dump($_POST);
         if (isset($_POST['liste_name'])){
-            $nom = $_POST['liste_name'];
+            $nom = filter_var($_POST['liste_name'],FILTER_SANITIZE_SPECIAL_CHARS);
         }
         else{
             $nom = 'Liste sans nom';
         }
 
         if (isset($_POST['liste_desc'])){
-            $desc = $_POST['liste_desc'];
+            $desc = filter_var($_POST['liste_desc'],FILTER_SANITIZE_SPECIAL_CHARS);
         }
         else{
             $desc = '';
@@ -38,10 +38,19 @@ class ControleurEditionListe
             $private = 0;
         }
 
+        if (isset($_POST['date'])){
+            $date = $_POST['date'];
+        }
+        else{
+            $date = '31/12/2099';
+        }
+
+        $date = \DateTime::createFromFormat('d/m/Y', $date);
+
         $liste = new Liste();
         $liste->titre = $nom;
         $liste->description = $desc;
-        //$liste->expiration = ? ;
+        $liste->expiration = $date;
         $token = "";
         try {
             $token = bin2hex(random_bytes(5));
