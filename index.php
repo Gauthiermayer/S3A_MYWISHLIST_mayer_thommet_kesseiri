@@ -7,6 +7,7 @@ use mywishlist\controleurs\ControleurHome;
 use mywishlist\controleurs\ControleurListes;
 use mywishlist\conf\Database;
 use mywishlist\controleurs\ControleurLogin;
+use mywishlist\controleurs\ControleurReservation;
 
 Database::connect();
 $app = new \Slim\Slim();
@@ -44,6 +45,11 @@ $app->get('/liste/:id_liste/item/:id_item', function($id_liste, $id_item) {
     //echo "Affiche l'item ".$id_item." de la liste ".$id_liste;
     ControleurListes::getItem($id_item);
 })->name('route_item');
+
+$app->post('/liste/:id_liste/item/:id_item/reserver', function($id_liste, $id_item) {
+    ControleurReservation::reserverItem($id_item,$id_liste);
+    ControleurListes::getItem($id_item);
+})->name('reserver_item');
 
 
 

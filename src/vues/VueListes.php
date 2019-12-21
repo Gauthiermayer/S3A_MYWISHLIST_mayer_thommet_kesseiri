@@ -35,7 +35,7 @@ END;
             foreach ($this->params['listes'] as $key => $l) {
                 if($l['liste']['private'] != 1) {
 
-                    //$rootUri = $this->app->request->getRootUri() ;
+                    //$rootUri = $this->app->request->getRootUri();
                     $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['liste']['no']]);
                     $num = $l['liste']['no'];
                     $titre = $l['liste']['titre'];
@@ -122,15 +122,35 @@ END;
                 $routeImg = $rootUri . '/img/' . $img;
             }
 
-            $reservation = '<a href="#" class="btn btn-primary">Réserver</a>';
+            $disabled = '';
+            $button = 'Réserver';
+            $nom = 'Michel';
+            $style = '';
             if (isset($_COOKIE['created'])) {
-
                 $created = unserialize($_COOKIE['created']);
                 if (in_array($this->params['token_list'], $created)) {
-                    $reservation = '<a href="#" class="btn btn-primary disabled">Réserver</a>';
+                    $disabled = 'disabled';
                 }
             }
 
+            //var_dump($this->params['reserve']);
+            if($this->params['reserve']){
+                $disabled = 'disabled';
+            }
+
+
+            if (isset($_COOKIE['reserves'])) {
+                $reserves = unserialize($_COOKIE['reserves']);
+                //var_dump($reserves);
+                if (in_array($this->params['reservation']['tokenReserv'], $reserves)) {
+                    $disabled = '';
+                    $button = 'Annuler';
+                    $nom = $this->params['reservation']['message'];
+                    $style = 'style="background-color: #bd2130"';
+                }
+            }
+
+            $url_reserv = $this->app->urlFor('reserver_item', ['id_liste' => $this->params['item']['liste_id'], 'id_item' => $this->params['item']['id']]);;
             echo
 <<<END
 <div class="card m-lg-5 ">
@@ -139,7 +159,13 @@ END;
     <h5 class="card-title">$titre</h5>
     <h4>$tarif €</h4>
     <p class="card-text">$desc</p>
-    $reservation
+    <form class="mt-5" style="max-width: 200px" method="post" action="$url_reserv">
+        <div class="form-group">
+            <label for="nom">Votre nom</label>
+            <input type="text" class="form-control" name="nom" aria-describedby="nom" placeholder="$nom" $disabled>    
+         </div>
+        <button type="submit" class="btn btn-primary mb-3 mt-3" $style $disabled>$button</button>
+    </form>
   </div>
 </div>
 END;

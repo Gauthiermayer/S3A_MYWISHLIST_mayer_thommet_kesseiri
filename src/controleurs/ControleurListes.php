@@ -6,6 +6,7 @@ namespace mywishlist\controleurs;
 
 use mywishlist\models\Item;
 use mywishlist\models\Liste;
+use mywishlist\models\Reservation;
 use mywishlist\vues\VueListes;
 
 class ControleurListes
@@ -29,9 +30,18 @@ class ControleurListes
     }
 
     public static function getItem($id_item){
+        $reserv = Reservation::all()->where('idItem','=',$id_item)->toArray();
+        if(sizeof($reserv) != 0){
+            foreach ($reserv as $key => $val){
+                $reserv = $val;
+            }
+        }
+        else{
+            $reserv = NULL;
+        }
         $item = Item::all()->find($id_item);
         $liste = Liste::all()->find($item['liste_id']);
-        $vue = new VueListes(['item' => $item, 'token_list' => $liste['token']]);
+        $vue = new VueListes(['item' => $item, 'token_list' => $liste['token'], 'reserve' => $reserv != NULL, 'reservation' => $reserv]);
         $vue->afficher(3);
     }
 }
