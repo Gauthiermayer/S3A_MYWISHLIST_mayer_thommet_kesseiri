@@ -61,7 +61,14 @@ class ControleurReservation
         }
     }
 
-    public static function annulerResrvation($id_item,$id_liste){
-
+    public static function annulerReservation($id_item,$id_liste){
+        $reservation = Reservation::all()->where('idItem','=',$id_item)->where('idListe','=',$id_liste)->first();
+        $token = $reservation['tokenReserv'];
+        if (isset($_COOKIE['reserves'])) {
+            $reserves = unserialize($_COOKIE['reserves']);
+            if (in_array($token, $reserves)) {
+                $reservation->delete();
+            }
+        }
     }
 }

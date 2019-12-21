@@ -138,7 +138,7 @@ END;
                 $disabled = 'disabled';
             }
 
-
+            $url_reserv = $this->app->urlFor('reserver_item', ['id_liste' => $this->params['item']['liste_id'], 'id_item' => $this->params['item']['id']]);;
             if (isset($_COOKIE['reserves'])) {
                 $reserves = unserialize($_COOKIE['reserves']);
                 //var_dump($reserves);
@@ -147,10 +147,11 @@ END;
                     $button = 'Annuler';
                     $nom = $this->params['reservation']['message'];
                     $style = 'style="background-color: #bd2130"';
+                    $url_reserv = $this->app->urlFor('annuler_reservation', ['id_liste' => $this->params['item']['liste_id'], 'id_item' => $this->params['item']['id']]);;
                 }
             }
 
-            $url_reserv = $this->app->urlFor('reserver_item', ['id_liste' => $this->params['item']['liste_id'], 'id_item' => $this->params['item']['id']]);;
+
             echo
 <<<END
 <div class="card m-lg-5 ">

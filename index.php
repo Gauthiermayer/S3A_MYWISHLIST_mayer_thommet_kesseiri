@@ -51,6 +51,11 @@ $app->post('/liste/:id_liste/item/:id_item/reserver', function($id_liste, $id_it
     ControleurListes::getItem($id_item);
 })->name('reserver_item');
 
+$app->post('/liste/:id_liste/item/:id_item/annulerReservation', function($id_liste, $id_item) {
+    ControleurReservation::annulerReservation($id_item,$id_liste);
+    ControleurListes::getItem($id_item);
+})->name('annuler_reservation');
+
 
 
 
