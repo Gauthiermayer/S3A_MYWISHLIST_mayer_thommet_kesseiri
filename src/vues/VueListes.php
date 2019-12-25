@@ -68,21 +68,27 @@ END;
 <div class="row row-cols-1 row-cols-md-3 ml-5 mr-5">
 END;
 
+            $id_liste = '';
+            $rootUri = $this->app->urlFor('default', []);
             foreach ($this->params['items'] as $key => $items) {
-                $rootUri = $this->app->urlFor('default', []);
                 $itemUrl = $this->app->urlFor('route_item', ['id_liste' => $items['liste_id'], 'id_item' => $items['id']]);
                 $num = $items['id'];
                 $titre = $items['nom'];
                 $desc = $items['descr'];
+                $id_liste = $items['liste_id'];
                 if (strlen($desc) > 60){
                     $desc = substr_replace($desc,'..',60);
                 }
 
-                $routeImg = $rootUri . '/img/' . 'defaut.jpg';
-                if (isset($items['img'])) {
-                    $img = $items['img'];
-                    $routeImg = $rootUri . '/img/' . $img;
+                $routeImg = $rootUri . 'img/' . 'defaut.jpg';
+                if(isset($items['url']) && $items['url'] != ''){
+                    $routeImg = $items['url'];
                 }
+                else if (isset($items['img'])) {
+                    $img = $items['img'];
+                    $routeImg = $rootUri . 'img/' . $img;
+                }
+
 
                 echo
 <<<END
@@ -98,6 +104,26 @@ END;
   </div>
 </div>
 END;
+            }
+
+            if ($this->params['creator']){
+                $urlAdd = $this->app->urlFor('form_ajout_item',['id_liste' => $id_liste]);
+                $urlImg = $rootUri . 'img/' . 'defaut.jpg';
+                echo
+<<<END
+<div class="col mb-4">
+<div class="card h-100 m-3" style="width: 18rem;">
+  <img class="card-img-top m-auto" src="$urlImg" alt='Ajouter item' style="width: 17.9rem;height: 180px ">  
+
+      <div class="card-body">
+        <h5 class="card-title">Ajouter un item.</h5>
+        <p class="card-text">Ajouter un item à votre liste.</p>
+        <a href="$urlAdd" class="btn btn-primary">Ajouter</a>
+      </div>
+  </div>
+</div>
+END;
+
             }
 
             echo
@@ -116,10 +142,10 @@ END;
             $desc = $item['descr'];
             $tarif = $item['tarif'];
 
-            $routeImg = $rootUri . '/img/' . 'defaut.jpg';
+            $routeImg = $rootUri . 'img/' . 'defaut.jpg';
             if (isset($item['img'])) {
                 $img = $item['img'];
-                $routeImg = $rootUri . '/img/' . $img;
+                $routeImg = $rootUri . 'img/' . $img;
             }
 
             $disabled = '';
@@ -130,12 +156,14 @@ END;
                 $created = unserialize($_COOKIE['created']);
                 if (in_array($this->params['token_list'], $created)) {
                     $disabled = 'disabled';
+                    $button = 'Réservé';
                 }
             }
 
             //var_dump($this->params['reserve']);
             if($this->params['reserve']){
                 $disabled = 'disabled';
+                $button = 'Réservé';
             }
 
             $url_reserv = $this->app->urlFor('reserver_item', ['id_liste' => $this->params['item']['liste_id'], 'id_item' => $this->params['item']['id']]);;

@@ -4,6 +4,7 @@
 namespace mywishlist\controleurs;
 
 
+use mywishlist\models\Item;
 use mywishlist\models\Liste;
 use mywishlist\vues\VueEditionCreationListe;
 
@@ -13,6 +14,16 @@ class ControleurEditionListe
     public static function afficherCreerListe(){
         $vue = new VueEditionCreationListe();
         $vue->afficher(1);
+    }
+
+    public static function afficherEditerListe(){
+        $vue = new VueEditionCreationListe();
+        $vue->afficher(2);
+    }
+
+    public static function afficherCreerItem(){
+        $vue = new VueEditionCreationListe();
+        $vue->afficher(3);
     }
 
     public static function creerListe(){
@@ -75,6 +86,56 @@ class ControleurEditionListe
 
         $liste->save();
 
+    }
+
+    public static function ajouterItem($id_liste){
+        $liste = Liste::all()->find($id_liste);
+        $token = $liste['token'];
+        if (isset($_COOKIE['created'])) {
+            $created = unserialize($_COOKIE['created']);
+            if (in_array($token, $created)) {
+                if (isset($_POST['nom']) && $_POST['nom'] != '') {
+                    $nom = filter_var($_POST['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
+                } else {
+                    $nom = 'Cadeau surprise';
+                }
+
+                if (isset($_POST['desc']) && $_POST['desc'] != '') {
+                    $desc = filter_var($_POST['desc'], FILTER_SANITIZE_SPECIAL_CHARS);
+                } else {
+                    $desc = '';
+                }
+
+                if (isset($_POST['prix']) && $_POST['prix'] != ''){
+                    $prix = filter_var($_POST['prix'], FILTER_SANITIZE_SPECIAL_CHARS);
+                }
+                else {
+                    $prix = 0;
+                }
+
+                if (isset($_POST['image'])) {
+                    $image = filter_var($_POST['image'], FILTER_SANITIZE_SPECIAL_CHARS);
+                } else {
+                    $image = NULL;
+                }
+
+                if (isset($_POST['url_image'])) {
+                    $url_image = filter_var($_POST['url_image'], FILTER_SANITIZE_SPECIAL_CHARS);
+                } else {
+                    $url_image = NULL;
+                }
+
+                $item = new Item();
+                $item->liste_id = $id_liste;
+                $item->nom = $nom;
+                $item->descr = $desc;
+                $item->img = $image;
+                $item->url = $url_image;
+                $item->tarif = $prix;
+
+                $item->save();
+            }
+        }
     }
 
 }

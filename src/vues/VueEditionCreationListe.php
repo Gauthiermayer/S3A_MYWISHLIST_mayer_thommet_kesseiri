@@ -8,6 +8,7 @@ class VueEditionCreationListe
 {
 
     private $app;
+    public static $images = ['animateur','apparthotel','bijoux','boitedenuit','bonroi','bricolage','cadeaux','champagne','cocktail','concert','connaissance','contact','diner','film','fort','gouter','grandrue','hotel_haussonville_logo','laser','musique','opera','origami','place','poirelregarder','rose'];
 
     public function __construct()
     {
@@ -43,12 +44,57 @@ class VueEditionCreationListe
 END;
     }
 
+    private function afficherAjoutItem(){
+        echo
+        <<<END
+<form class="container mt-5" style="max-width: 700px" method="post" action="">
+  <div class="form-group">
+    <label for="nom">Nom</label>
+    <input type="text" class="form-control" name="nom" placeholder="Place de concert...">    
+  </div>
+  <div class="form-group">
+    <label for="desc">Description</label>
+    <input type="text" class="form-control" name="desc" placeholder="Description de l'item">
+  </div>
+  
+  <div class="form-group">
+    <label for="prix">Prix</label>  
+    <input size="16" class="form-control" type="text" placeholder="19.99€" name ="prix">    
+  </div> 
+
+    <div class="mt-5 input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Image</label>
+      </div>
+      <select class="custom-select" name="image">
+END;
+        foreach (VueEditionCreationListe::$images as $img){
+            echo '<option value="' . $img . '.jpg">' . $img . '</option>';
+        }
+        echo
+<<<END
+      </select>
+    </div>
+    <div class="form-group">
+    <label for="url_img">Ou url de l'image :</label>  
+    <input class="form-control" type="text" name ="url_image">    
+  </div> 
+ 
+  <button type="submit" class="btn btn-primary mb-3 mt-3">Ajouter l'item</button>
+</form>  
+
+END;
+    }
+
     public function afficher($type){
         VueHeaderFooter::afficherHeader('create');
 
         switch ($type){
             case 1:
                 $this->afficherCreation();
+                break;
+            case 3:
+                $this->afficherAjoutItem();
                 break;
         }
 

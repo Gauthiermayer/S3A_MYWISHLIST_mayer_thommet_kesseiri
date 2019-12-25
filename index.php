@@ -56,6 +56,16 @@ $app->post('/liste/:id_liste/item/:id_item/annulerReservation', function($id_lis
     ControleurListes::getItem($id_item);
 })->name('annuler_reservation');
 
+$app->post('/liste/:id_liste/ajouterItem', function($id_liste) {
+    ControleurEditionListe::ajouterItem($id_liste);
+    ControleurListes::getAllItems($id_liste);
+})->name('ajouter_item');
+
+$app->get('/liste/:id_liste/ajouterItem', function($id_liste) {
+    ControleurEditionListe::afficherCreerItem();
+})->name('form_ajout_item');
+
+
 
 
 

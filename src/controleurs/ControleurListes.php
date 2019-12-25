@@ -25,7 +25,16 @@ class ControleurListes
 
     public static function getAllItems($id_liste){
         $items = Item::all()->where('liste_id','=',$id_liste)->toArray();
-        $vue = new VueListes(['items' => $items]);
+        $liste = Liste::all()->find($id_liste);
+        $token = $liste['token'];
+        $isCreator = false;
+        if (isset($_COOKIE['created'])) {
+            $created = unserialize($_COOKIE['created']);
+            if (in_array($token, $created)) {
+                $isCreator = true;
+            }
+        }
+        $vue = new VueListes(['items' => $items, 'creator' => $isCreator]);
         $vue->afficher(2);
     }
 

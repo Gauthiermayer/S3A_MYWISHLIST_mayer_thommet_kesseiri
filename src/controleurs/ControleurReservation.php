@@ -38,7 +38,6 @@ class ControleurReservation
                 $cookie = serialize($cookie);
             }
             else{
-                echo 'test';
                 $cookie = serialize([$token_reserv]);
             }
 
