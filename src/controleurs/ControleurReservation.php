@@ -23,14 +23,14 @@ class ControleurReservation
         }
         //pas créateur
         //vérifie que pas dejà reservé
-        $reserv = Reservation::all()->where('idItem','=',$id_item)->toArray();
-        if(sizeof($reserv) == 0){ //pas deja reservé
+        $reserv = Reservation::all()->where('idItem','=',$id_item)->first();
+
+        if(!isset($reserv)){ //pas deja reservé
             $token_reserv = "";
             try {
                 $token_reserv = bin2hex(random_bytes(5));
             } catch (\Exception $e) {}
 
-            $cookie = [];
             if (isset($_COOKIE['reserves'])){
                 $cookie = unserialize($_COOKIE['reserves']);
                 var_dump($cookie);

@@ -35,6 +35,13 @@ class ControleurEditionListe
             $nom = 'Liste sans nom';
         }
 
+        //vérifie si une liste porte déjà ce nom
+        $listeExistante = Liste::where('titre', '=', $nom)->first();
+        if (isset($listeExistante)) {
+            //TODO afficher erreur
+            return;
+        }
+
         if (isset($_POST['liste_desc'])){
             $desc = filter_var($_POST['liste_desc'],FILTER_SANITIZE_SPECIAL_CHARS);
         }
