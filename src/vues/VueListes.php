@@ -61,21 +61,22 @@ END;
         }
     }
 
-    private function afficherAllItems(){
+        private function afficherAllItems(){
         if ($this->params != NULL) {
+            $id_liste = $this->params['liste_id'];
+
             echo
 <<<END
 <div class="row row-cols-1 row-cols-md-3 ml-5 mr-5">
 END;
 
-            $id_liste = '';
             $rootUri = $this->app->urlFor('default', []);
+
             foreach ($this->params['items'] as $key => $items) {
                 $itemUrl = $this->app->urlFor('route_item', ['id_liste' => $items['liste_id'], 'id_item' => $items['id']]);
                 $num = $items['id'];
                 $titre = $items['nom'];
                 $desc = $items['descr'];
-                $id_liste = $items['liste_id'];
                 if (strlen($desc) > 60){
                     $desc = substr_replace($desc,'..',60);
                 }
@@ -203,19 +204,26 @@ END;
 
     }
 
+    /**
+     * Permet d'afficher la vue.
+     * @param $type String  type d'affichage :
+     *  - 'listes' : affiche toutes les listes.
+     *  - 'liste' : affiche une seule liste.
+     *  - 'item' : affiche un seul item d'une liste.
+     */
     public function afficher($type){
 
         VueHeaderFooter::afficherHeader("wishlist");
 
         //affiche le contenu
         switch ($type){
-            case 1:
+            case 'listes':
                 $this->afficherToutesListes();
                 break;
-            case 2:
+            case 'liste':
                 $this->afficherAllItems();
                 break;
-            case 3:
+            case 'item':
                 $this->afficherItem();
                 break;
         }

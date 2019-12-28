@@ -20,7 +20,7 @@ class ControleurListes
             array_push($params['listes'], ['liste' => $liste, 'nb' => $nb_items]);
         }
         $vue = new VueListes($params);
-        $vue->afficher(1);
+        $vue->afficher("listes");
     }
 
     public static function getAllItems($id_liste){
@@ -34,8 +34,8 @@ class ControleurListes
                 $isCreator = true;
             }
         }
-        $vue = new VueListes(['items' => $items, 'creator' => $isCreator]);
-        $vue->afficher(2);
+        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'liste_id' => $id_liste]);
+        $vue->afficher("liste");
     }
 
     public static function getItem($id_item){
@@ -51,6 +51,6 @@ class ControleurListes
         $item = Item::all()->find($id_item);
         $liste = Liste::all()->find($item['liste_id']);
         $vue = new VueListes(['item' => $item, 'token_list' => $liste['token'], 'reserve' => $reserv != NULL, 'reservation' => $reserv]);
-        $vue->afficher(3);
+        $vue->afficher("item");
     }
 }
