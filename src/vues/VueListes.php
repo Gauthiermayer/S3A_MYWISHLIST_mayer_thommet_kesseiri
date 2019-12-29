@@ -64,9 +64,10 @@ END;
         private function afficherAllItems(){
         if ($this->params != NULL) {
             $id_liste = $this->params['liste_id'];
-
+            $titreListe = $this->params['titreListe'];
             echo
 <<<END
+<p class="h1 text-center">$titreListe</p>
 <div class="row row-cols-1 row-cols-md-3 ml-5 mr-5">
 END;
 

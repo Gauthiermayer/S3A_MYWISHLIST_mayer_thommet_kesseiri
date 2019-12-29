@@ -34,7 +34,7 @@ class ControleurListes
                 $isCreator = true;
             }
         }
-        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'liste_id' => $id_liste]);
+        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'liste_id' => $id_liste, 'titreListe' => $liste->titre]);
         $vue->afficher("liste");
     }
 

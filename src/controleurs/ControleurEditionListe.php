@@ -93,6 +93,9 @@ class ControleurEditionListe
 
         $liste->save();
 
+        //redirection vers la page d'affichage de la liste
+        header("Location: ./$liste->no");
+        exit(0);
     }
 
     public static function ajouterItem($id_liste){
