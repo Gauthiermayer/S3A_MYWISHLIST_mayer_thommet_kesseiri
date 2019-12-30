@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 17 déc. 2019 à 16:17
+-- Généré le :  lun. 30 déc. 2019 à 17:11
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.3.5
 
@@ -25,19 +25,40 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `compte`
+--
+
+DROP TABLE IF EXISTS `compte`;
+CREATE TABLE IF NOT EXISTS `compte` (
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `role` enum('admin','user') NOT NULL DEFAULT 'user',
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `compte`
+--
+
+INSERT INTO `compte` (`username`, `password`, `role`) VALUES
+('admin', '$2y$12$NmyIhfCTl0wf6zp22losKeho.ud8KG/LmBr9iujqMTTYAxQqoxqBm', 'admin');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `item`
 --
 
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
-                                      `id` int(11) NOT NULL AUTO_INCREMENT,
-                                      `liste_id` int(11) NOT NULL,
-                                      `nom` text NOT NULL,
-                                      `descr` text,
-                                      `img` text,
-                                      `url` text,
-                                      `tarif` decimal(5,2) DEFAULT NULL,
-                                      PRIMARY KEY (`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `liste_id` int(11) NOT NULL,
+  `nom` text NOT NULL,
+  `descr` text,
+  `img` text,
+  `url` text,
+  `tarif` decimal(5,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 --
@@ -73,15 +94,15 @@ INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`) VAL
 
 DROP TABLE IF EXISTS `liste`;
 CREATE TABLE IF NOT EXISTS `liste` (
-                                       `no` int(11) NOT NULL AUTO_INCREMENT,
-                                       `user_id` int(11) DEFAULT NULL,
-                                       `titre` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                                       `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-                                       `expiration` date DEFAULT NULL,
-                                       `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-                                       `private` tinyint(1) DEFAULT '0',
-                                       PRIMARY KEY (`no`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `no` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `titre` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `expiration` date DEFAULT NULL,
+  `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `private` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `liste`
@@ -100,10 +121,10 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 
 DROP TABLE IF EXISTS `reservation`;
 CREATE TABLE IF NOT EXISTS `reservation` (
-                                             `idItem` int(11) NOT NULL,
-                                             `idListe` int(11) NOT NULL,
-                                             `message` varchar(250) NOT NULL,
-                                             `tokenReserv` varchar(100) NOT NULL
+  `idItem` int(11) NOT NULL,
+  `idListe` int(11) NOT NULL,
+  `message` varchar(250) NOT NULL,
+  `tokenReserv` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 

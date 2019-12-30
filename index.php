@@ -6,20 +6,21 @@ use mywishlist\controleurs\ControleurEditionListe;
 use mywishlist\controleurs\ControleurHome;
 use mywishlist\controleurs\ControleurListes;
 use mywishlist\conf\Database;
-use mywishlist\controleurs\ControleurLogin;
+use mywishlist\controleurs\ControleurCompte;
 use mywishlist\controleurs\ControleurReservation;
 
+session_start(); //TODO Faut bien le mettre ici ? (ou parfois on la démarre pour rien ?)
 Database::connect();
 $app = new \Slim\Slim();
 
+//------------------------ HOME ------------------------\\
 $app->get('/', function() {
     ControleurHome::default();
 })->name('default');
+//------------------------ HOME ------------------------\\
 
-$app->get('/login', function() {
-    ControleurLogin::pageConnexion();
-})->name('login');
 
+//------------------------ LISTE ------------------------\\
 $app->get('/listes/', function() {
     //echo "Affiche toutes les listes";
     ControleurListes::getListes();
@@ -34,7 +35,6 @@ $app->get('/liste/create', function() {
     //echo 'création d une liste';
     ControleurEditionListe::afficherCreerListe();
 })->name('creation_liste');
-
 
 $app->get('/liste/:id_liste', function($id_liste) {
     //echo "Affiche tous les items de la liste ".$id_liste;
@@ -64,11 +64,32 @@ $app->post('/liste/:id_liste/ajouterItem', function($id_liste) {
 $app->get('/liste/:id_liste/ajouterItem', function($id_liste) {
     ControleurEditionListe::afficherCreerItem();
 })->name('form_ajout_item');
+//------------------------ LISTE ------------------------\\
 
 
+//------------------------ COMPTE ------------------------\\
+$app->get('/login', function() {
+    ControleurCompte::pageConnexion();
+})->name('login');
 
+$app->get('/inscription', function () {
+    ControleurCompte::pageInscription();
+})->name('form_inscription');
 
+$app->post('/inscription/succes', function () { //TODO changer la route car /inscription/succes bof
+    $app = \Slim\Slim::getInstance() ;
+    $login = $app->request->post('login');
+    $pass = $app->request->post('password');
+    ControleurCompte::inscription($login, $pass);
+})->name('inscription');
 
+$app->post('/connexion', function () {
+    $app = \Slim\Slim::getInstance() ;
+    $login = $app->request->post('login');
+    $pass = $app->request->post('password');
+    ControleurCompte::connexion($login, $pass);
+})->name('connexion');
+//------------------------ COMPTE ------------------------\\
 
 $app->run();
 
