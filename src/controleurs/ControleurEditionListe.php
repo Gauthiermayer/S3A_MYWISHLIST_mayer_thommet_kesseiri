@@ -27,8 +27,9 @@ class ControleurEditionListe
     }
 
     public static function creerListe(){
-        //var_dump($_POST);
-        if (isset($_POST['liste_name'])){
+        var_dump($_POST);
+
+        if (isset($_POST['liste_name']) && $_POST['liste_name'] != ''){
             $nom = filter_var($_POST['liste_name'],FILTER_SANITIZE_SPECIAL_CHARS);
         }
         else{
@@ -42,7 +43,7 @@ class ControleurEditionListe
             return;
         }
 
-        if (isset($_POST['liste_desc'])){
+        if (isset($_POST['liste_desc']) && $_POST['liste_desc'] != ''){
             $desc = filter_var($_POST['liste_desc'],FILTER_SANITIZE_SPECIAL_CHARS);
         }
         else{
@@ -56,7 +57,7 @@ class ControleurEditionListe
             $private = 0;
         }
 
-        if (isset($_POST['date'])){
+        if (isset($_POST['date']) && $_POST['date'] != ''){
             $date = $_POST['date'];
         }
         else{
@@ -90,6 +91,7 @@ class ControleurEditionListe
         }
 
         setcookie('created',$cookie,time()+60*60*24*365);
+
 
         $liste->save();
 
