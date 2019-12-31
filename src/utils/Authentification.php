@@ -1,11 +1,12 @@
 <?php
 
-
 namespace mywishlist\utils;
 
-
+require_once 'vendor/autoload.php';
 use mywishlist\controleurs\ControleurCompte;
 use mywishlist\models\Compte;
+use ZxcvbnPhp\Zxcvbn as PasswordChecker;
+
 
 class Authentification {
 
@@ -15,7 +16,17 @@ class Authentification {
             return;
         }//TODO afficher une erreur
 
-        //TODO check password policy (si assez fort)
+
+        //---------------- Vérifie la force du mot de passe ----------------\\
+        $passChecker = new PasswordChecker();
+        $force = $passChecker->passwordStrength($password, array($username));
+
+        if ($force['score'] < 1) {
+            echo 'Veuillez entrer un mot de passe plus sécurisé';
+            return;
+        }//TODO afficher une erreur
+        //---------------- Vérifie la force du mot de passe ----------------\\
+
         $hash = password_hash($password, PASSWORD_DEFAULT, ['cost'=> 12]);
 
         $compte = new Compte();
