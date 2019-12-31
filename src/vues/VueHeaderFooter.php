@@ -32,6 +32,16 @@ END;
 END;
         //------------------- Ajoute le css en param -------------------\\
 
+        /* Si l'user est connecté :
+         * - affiche son nom à la place de 'Login'
+         * - modifie le lien du bouton -> vers page de gestion du compte
+         */
+        $login = 'Login'; $loginURL = 'login';
+        if (isset($_SESSION['user_connected'])) {
+            $login = $_SESSION['user_connected']['username'];
+            $loginURL = 'compte';
+        }
+
         $header = $header .
             <<<END
             <title>Wishlist</title>
@@ -44,7 +54,7 @@ END;
             <a class="home" href="$rootUri/">Home</a>
             <a class="wishlist" href="$rootUri/listes">Wishlist</a>
             <a class="create" href="$rootUri/liste/create">Nouvelle liste</a>
-            <a class="login" href="$rootUri/login">Login</a>
+            <a class="login" href="$rootUri/$loginURL">$login</a>
           </div>
         </div>
 

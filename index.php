@@ -69,6 +69,7 @@ $app->get('/liste/:id_liste/ajouterItem', function($id_liste) {
 
 //------------------------ COMPTE ------------------------\\
 $app->get('/login', function() {
+    ControleurCompte::deconnexion();
     ControleurCompte::pageConnexion();
 })->name('login');
 
@@ -89,6 +90,10 @@ $app->post('/connexion', function () {
     $pass = $app->request->post('password');
     ControleurCompte::connexion($login, $pass);
 })->name('connexion');
+
+$app->get('/compte', function () {
+   ControleurCompte::pageGestionCompte();
+});
 //------------------------ COMPTE ------------------------\\
 
 $app->run();

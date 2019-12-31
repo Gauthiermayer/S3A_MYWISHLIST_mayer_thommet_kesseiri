@@ -94,14 +94,11 @@ END;
     }
 
     /**
-     * Affiche le résultat de la connexion (succès / ou message d'erreur)
-     * @param string $status Contient un message résultant de la connexion. (succes/password_incorrect/login_incorrect)
+     * Affiche le résultat de la connexion (message d'erreur)
+     * @param string $status Contient un message résultant de la connexion. (password_incorrect/login_incorrect)
      */
-    public function afficherTentativeConnexion(string $status) {
+    public function afficherErreurConnexion(string $status) {
         switch ($status) {
-            case 'succes':
-                $html_code = '<div class="alert alert-success" role="alert">Vous êtes maintenant connecté !</div>';
-                break;
             case 'login_incorrect' :
                 $html_code = '<div class="alert alert-danger" role="alert">Login incorrect</div>';
                 break;
@@ -111,5 +108,44 @@ END;
         }
 
         self::afficherPageConnexion($html_code);
+    }
+
+    /**
+     * Affiche la page de gestion de compte de l'utilisateur connecté.
+     * Si aucun utilisateur est connecté affiche une erreur.
+     */
+    public function afficherPageGestionCompte($vientDetreCree = false) {
+        if (!isset($_SESSION['user_connected'])) {
+            VueHeaderFooter::afficherHeader('login', '404');
+            echo
+            <<<END
+            <section class="error-container">
+                <span>4</span>
+                <span><span class="screen-reader-text">0</span></span>
+                <span>4</span>
+            </section>
+END;
+        }
+
+        else {
+            $urlConnexion = $this->app->urlFor('login');
+            VueHeaderFooter::afficherHeader('login');
+
+            $html_page = '';
+            if ($vientDetreCree)
+                $html_page = '<div class="alert alert-success" role="alert">Vous êtes maintenant connecté !</div>';
+
+            $html_page = $html_page .
+            <<<END
+            <div class="text-center container mt-5" style="max-width: 330px">
+                <form method="get" action="$urlConnexion">
+                    <button class="btn btn-primary btn-block"   >Se déconnecter</button>
+                </form>               
+            </div>
+END;
+            echo $html_page;
+        }
+
+        VueHeaderFooter::afficherFooter();
     }
 }

@@ -23,7 +23,11 @@ class ControleurCompte {
     public static function connexion($login, $pass) {
         $status = Authentification::connexion($login, $pass);
         $vue = new VueCompte();
-        $vue->afficherTentativeConnexion($status);
+
+        if ($status != 'succes')
+            $vue->afficherErreurConnexion($status);
+        else
+            $vue->afficherPageGestionCompte(true);
     }
 
     public static function inscription($login, $pass) {
@@ -33,5 +37,14 @@ class ControleurCompte {
     public static function pageInscription() {
         $vue = new VueCompte();
         $vue->afficherPageInscription();
+    }
+
+    public static function pageGestionCompte() {
+        $vue = new VueCompte();
+        $vue->afficherPageGestionCompte();
+    }
+
+    public static function deconnexion() {
+        if (isset($_SESSION['user_connected'])) unset($_SESSION['user_connected']);
     }
 }
