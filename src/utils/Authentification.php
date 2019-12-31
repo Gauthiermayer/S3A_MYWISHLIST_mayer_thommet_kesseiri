@@ -10,8 +10,8 @@ use ZxcvbnPhp\Zxcvbn as PasswordChecker;
 
 class Authentification {
 
-    public static function creerCompte($username, $password) {
-        if (self::compteExiste($username)) {
+    public static function creerCompte($username, $password, $pseudo) {
+        if (self::compteExiste($username, $pseudo)) {
             echo 'Compte déjà existant';
             return;
         }//TODO afficher une erreur
@@ -33,9 +33,10 @@ class Authentification {
         $compte->username = $username;
         $compte->password = $hash;
         $compte->role = 'user'; //TODO
+        $compte->pseudo = $pseudo;
         $compte->save();
 
-        ControleurCompte::pageConnexion(); //TODO AFFICHER MESSAGE SUCCES OU ERREUR
+        ControleurCompte::connexion($username, $password);
     }
 
     /**
@@ -68,7 +69,8 @@ class Authentification {
     private static function loadProfile($user) {
         unset($_SESSION['user_connected']);
         $_SESSION['user_connected'] = array('username' => "$user->username",
-                                            'role' => "$user->role");
+                                            'role' => "$user->role",
+                                            'pseudo' => "$user->pseudo");
     }
 
     public static function checkAccessRights($required) {
@@ -78,9 +80,16 @@ class Authentification {
     /**
      * Vérifie si le compte existe déjà dans la BDD.
      * @param $username string Nom de compte.
+     * @param $pseudo string Pseudo du compte.
      * @return bool true si le compte existe déjà.
      */
-    private static function compteExiste($username):bool {
-        return Compte::where('username', '=', $username)->first() != null;
+    private static function compteExiste($username, $pseudo):bool {
+        //Check sur l'username
+        $alreadyExist = Compte::where('username', '=', $username)->first() != null;
+        //Si l'username n'est pas déjà utilisé vérifie le pseudo
+        if (!$alreadyExist)
+            $alreadyExist = Compte::where('pseudo', '=', $pseudo)->first() != null;
+
+        return $alreadyExist;
     }
 }

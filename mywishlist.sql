@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 30 déc. 2019 à 17:11
+-- Généré le :  mar. 31 déc. 2019 à 14:03
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.3.5
 
@@ -32,16 +32,18 @@ DROP TABLE IF EXISTS `compte`;
 CREATE TABLE IF NOT EXISTS `compte` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
+  `pseudo` varchar(20) NOT NULL,
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
-  PRIMARY KEY (`username`)
+  PRIMARY KEY (`username`),
+  UNIQUE KEY `PSEUDO_UNIQUE` (`pseudo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `compte`
 --
 
-INSERT INTO `compte` (`username`, `password`, `role`) VALUES
-('admin', '$2y$12$NmyIhfCTl0wf6zp22losKeho.ud8KG/LmBr9iujqMTTYAxQqoxqBm', 'admin');
+INSERT INTO `compte` (`username`, `password`, `pseudo`, `role`) VALUES
+('admin', '$2y$12$NmyIhfCTl0wf6zp22losKeho.ud8KG/LmBr9iujqMTTYAxQqoxqBm', 'admin57', 'admin');
 
 -- --------------------------------------------------------
 
@@ -95,23 +97,24 @@ INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`) VAL
 DROP TABLE IF EXISTS `liste`;
 CREATE TABLE IF NOT EXISTS `liste` (
   `no` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
+  `createur_pseudo` varchar(20) DEFAULT NULL,
   `titre` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `expiration` date DEFAULT NULL,
   `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `private` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`no`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`no`),
+  KEY `FK_createur_liste` (`createur_pseudo`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `liste`
 --
 
-INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `token`, `private`) VALUES
-(1, 1, 'Pour fêter le bac !', 'Pour un week-end à Nancy qui nous fera oublier les épreuves. ', '2018-06-27', 'nosecure1', 0),
-(2, 2, 'Liste de mariage d Alice et Bob', 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)', '2018-06-30', 'nosecure2', 0),
-(3, 3, 'C est l anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2017-12-12', 'nosecure3', 0);
+INSERT INTO `liste` (`no`, `createur_pseudo`, `titre`, `description`, `expiration`, `token`, `private`) VALUES
+(1, NULL, 'Pour fêter le bac !', 'Pour un week-end à Nancy qui nous fera oublier les épreuves. ', '2018-06-27', 'nosecure1', 0),
+(2, NULL, 'Liste de mariage d Alice et Bob', 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)', '2018-06-30', 'nosecure2', 0),
+(3, NULL, 'C est l anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2017-12-12', 'nosecure3', 0);
 
 -- --------------------------------------------------------
 
@@ -126,6 +129,16 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `message` varchar(250) NOT NULL,
   `tokenReserv` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `liste`
+--
+ALTER TABLE `liste`
+  ADD CONSTRAINT `FK_createur_liste` FOREIGN KEY (`createur_pseudo`) REFERENCES `compte` (`pseudo`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

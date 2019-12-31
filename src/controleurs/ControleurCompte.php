@@ -30,8 +30,8 @@ class ControleurCompte {
             $vue->afficherPageGestionCompte(true);
     }
 
-    public static function inscription($login, $pass) {
-        Authentification::creerCompte($login, $pass);
+    public static function inscription($login, $pass, $pseudo) {
+        Authentification::creerCompte($login, $pass, $pseudo);
     }
 
     public static function pageInscription() {

@@ -67,6 +67,11 @@ class ControleurEditionListe
         $date = \DateTime::createFromFormat('d/m/Y', $date);
 
         $liste = new Liste();
+
+        //Lie la liste à son créateur
+        if (isset($_SESSION['user_connected']))
+            $liste->createur_pseudo = $_SESSION['user_connected']['pseudo'];
+
         $liste->titre = $nom;
         $liste->description = $desc;
         $liste->expiration = $date;

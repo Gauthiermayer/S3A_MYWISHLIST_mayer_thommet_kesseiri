@@ -28,10 +28,8 @@ class VueCompte {
                 <!-- Formulaire login -->
                 <form method="post" action="$urlConnexion">
                     <img class="mb-4" src="$rootUri/img/login.png" alt="" width="120" height="120">
-                    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-                    <label for="login" class="sr-only">Adresse mail</label>
-                    <input type="text" name="login" class="form-control" placeholder="Nom d'utilisateur" required autofocus>
-                    <label for="password" class="sr-only">Mot de passe</label>
+                    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>                    
+                    <input type="text" name="login" class="form-control" placeholder="Nom d'utilisateur" required autofocus>                   
                     <input type="password" name="password" class="form-control" placeholder="Mot de passe" required>
                     <button class="btn btn-success btn-primary btn-block" type="submit">Se connecter</button>                                                                      
                 </form>
@@ -67,11 +65,10 @@ END;
                 <!-- Formulaire inscription -->
                 <form method="post" action="$urlInscription">
                     <img class="mb-4" src="$rootUri/img/login.png" alt="" width="120" height="120">
-                    <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
-                    <label for="login" class="sr-only">Adresse mail</label>
-                    <input type="text" name="login" id ="login" class="form-control" placeholder="Nom d'utilisateur" required autofocus>
-                    <label for="password" class="sr-only">Mot de passe</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe" required>
+                    <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>           
+                    <input type="text" name="pseudo" id ="pseudo" class="form-control" placeholder="Pseudo" required autofocus>             
+                    <input type="text" name="login" id ="login" class="form-control" placeholder="Nom d'utilisateur" required>                    
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe" required>                                                        
                     
                     <!-- Indique à l'utilisateur la force du mot de passe -->
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>               

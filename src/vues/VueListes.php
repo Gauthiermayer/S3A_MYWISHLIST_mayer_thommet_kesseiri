@@ -40,13 +40,13 @@ END;
                     $num = $l['liste']['no'];
                     $titre = $l['liste']['titre'];
                     $desc = $l['liste']['description'];
-                    $user_id = $l['liste']['user_id'];
+                    $createur_pseudo = $l['liste']['createur_pseudo'];
                     $nb_items = $l['nb'];
 
                     echo
 <<<END
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href=" $listeUrl"> $titre : $desc par $user_id.</a>
+            <a href=" $listeUrl"> $titre : $desc par $createur_pseudo.</a>
              <span class="badge badge-primary badge-pill">$nb_items items</span>
         </li>
 END;

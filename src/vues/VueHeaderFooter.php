@@ -33,12 +33,12 @@ END;
         //------------------- Ajoute le css en param -------------------\\
 
         /* Si l'user est connecté :
-         * - affiche son nom à la place de 'Login'
+         * - affiche son pseudo à la place de 'Login'
          * - modifie le lien du bouton -> vers page de gestion du compte
          */
         $login = 'Login'; $loginURL = 'login';
         if (isset($_SESSION['user_connected'])) {
-            $login = $_SESSION['user_connected']['username'];
+            $login = $_SESSION['user_connected']['pseudo'];
             $loginURL = 'compte';
         }
 

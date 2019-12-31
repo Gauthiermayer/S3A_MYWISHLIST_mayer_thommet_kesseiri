@@ -79,9 +79,10 @@ $app->get('/inscription', function () {
 
 $app->post('/inscription/succes', function () { //TODO changer la route car /inscription/succes bof
     $app = \Slim\Slim::getInstance() ;
+    $pseudo = $app->request->post('pseudo');
     $login = $app->request->post('login');
     $pass = $app->request->post('password');
-    ControleurCompte::inscription($login, $pass);
+    ControleurCompte::inscription($login, $pass, $pseudo);
 })->name('inscription');
 
 $app->post('/connexion', function () {
