@@ -15,7 +15,7 @@ class VueEditionCreationListe
         $this->app = \Slim\Slim::getInstance() ;
     }
 
-    private function afficherCreation(){
+    private function afficherCreation($erreurCreation = null){
         echo
 <<<END
 <form class="container mt-5" style="max-width: 700px" method="post" action="">
@@ -90,11 +90,14 @@ END;
         VueHeaderFooter::afficherHeader('create');
 
         switch ($type){
-            case 1:
+            case 'creationListe':
                 $this->afficherCreation();
                 break;
-            case 3:
+            case 'creationItem':
                 $this->afficherAjoutItem();
+                break;
+            case 'creationListeErreur':
+                $this->afficherCreation('Une liste porte déjà ce nom');
                 break;
         }
 

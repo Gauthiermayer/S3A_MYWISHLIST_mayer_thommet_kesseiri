@@ -13,22 +13,20 @@ class ControleurEditionListe
 
     public static function afficherCreerListe(){
         $vue = new VueEditionCreationListe();
-        $vue->afficher(1);
+        $vue->afficher('creationListe');
     }
 
     public static function afficherEditerListe(){
         $vue = new VueEditionCreationListe();
-        $vue->afficher(2);
+        $vue->afficher('edition');
     }
 
     public static function afficherCreerItem(){
         $vue = new VueEditionCreationListe();
-        $vue->afficher(3);
+        $vue->afficher('creationItem');
     }
 
     public static function creerListe(){
-        var_dump($_POST);
-
         if (isset($_POST['liste_name']) && $_POST['liste_name'] != ''){
             $nom = filter_var($_POST['liste_name'],FILTER_SANITIZE_SPECIAL_CHARS);
         }
@@ -39,6 +37,8 @@ class ControleurEditionListe
         //vérifie si une liste porte déjà ce nom
         $listeExistante = Liste::where('titre', '=', $nom)->first();
         if (isset($listeExistante)) {
+            //$vue = new VueEditionCreationListe();
+            //vue->afficher('creationListe');
             //TODO afficher erreur
             return;
         }

@@ -31,7 +31,13 @@ class ControleurCompte {
     }
 
     public static function inscription($login, $pass, $pseudo) {
-        Authentification::creerCompte($login, $pass, $pseudo);
+        $retour = Authentification::creerCompte($login, $pass, $pseudo);
+        if ($retour == 'succes')
+            ControleurCompte::connexion($login, $pass);
+        else { //Sinon afficher le message d'erreur
+            $vue = new VueCompte();
+            $vue->afficherPageInscription($retour);
+        }
     }
 
     public static function pageInscription() {

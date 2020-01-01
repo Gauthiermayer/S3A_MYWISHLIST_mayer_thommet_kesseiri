@@ -52,14 +52,14 @@ END;
         VueHeaderFooter::afficherFooter();
     }
 
-    public function afficherPageInscription() {
+    public function afficherPageInscription($erreurInscription = null) {
         VueHeaderFooter::afficherHeader('login', 'compte.css');
 
         $rootUri = $this->app->request->getRootUri();
         $urlInscription = $this->app->urlFor('inscription');
         $urlLogin = $this->app->urlFor('login');
 
-        echo
+        $html_page =
         <<<END
             <div class="text-center container mt-5" style="max-width: 330px">
                 <!-- Formulaire inscription -->
@@ -77,8 +77,15 @@ END;
                     <!-- Indique à l'utilisateur la force du mot de passe -->
                 
                     <button class="btn btn-success btn-primary btn-block" type="submit">S'inscrire</button>                                                                      
-                </form>
-                                                                            
+                </form>                                                                                          
+END;
+
+        //------------------- Ajoute le message d'erreur si problème lors de l'inscription -------------------\\
+        if (isset($erreurInscription))
+            $html_page = $html_page . "<div class=\"alert alert-danger\" role=\"alert\">$erreurInscription</div>";
+        //------------------- Ajoute le message d'erreur si problème lors de l'inscription -------------------\\
+        $html_page = $html_page .
+            <<<END
                 <hr>                            
                 <!-- Bouton retour login -->                             
                 <form method="get" action="$urlLogin">
@@ -87,6 +94,7 @@ END;
             </div>
 END;
 
+        echo $html_page;
         VueHeaderFooter::afficherFooter();
     }
 

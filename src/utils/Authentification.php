@@ -10,21 +10,24 @@ use ZxcvbnPhp\Zxcvbn as PasswordChecker;
 
 class Authentification {
 
-    public static function creerCompte($username, $password, $pseudo) {
-        if (self::compteExiste($username, $pseudo)) {
-            echo 'Compte déjà existant';
-            return;
-        }//TODO afficher une erreur
-
+    /**
+     * Créer un compte et l'enregistre dans la base de donnée.
+     * @param $username string Username du compte.
+     * @param $password string Mot de passe du compte.
+     * @param $pseudo string Pseudo du compte.
+     * @return string "Code de retour" : soit "succes" soit un message d'erreur.
+     */
+    public static function creerCompte($username, $password, $pseudo):string {
+        if (self::compteExiste($username, $pseudo))
+            return 'Un compte avec le même login/pseudo existe déjà';
 
         //---------------- Vérifie la force du mot de passe ----------------\\
         $passChecker = new PasswordChecker();
         $force = $passChecker->passwordStrength($password, array($username));
 
-        if ($force['score'] < 1) {
-            echo 'Veuillez entrer un mot de passe plus sécurisé';
-            return;
-        }//TODO afficher une erreur
+        if ($force['score'] < 1)
+            return 'Veuillez entrer un mot de passe plus sécurisé';
+
         //---------------- Vérifie la force du mot de passe ----------------\\
 
         $hash = password_hash($password, PASSWORD_DEFAULT, ['cost'=> 12]);
@@ -32,11 +35,11 @@ class Authentification {
         $compte = new Compte();
         $compte->username = $username;
         $compte->password = $hash;
-        $compte->role = 'user'; //TODO
+        $compte->role = 'user';
         $compte->pseudo = $pseudo;
         $compte->save();
 
-        ControleurCompte::connexion($username, $password);
+        return 'succes';
     }
 
     /**

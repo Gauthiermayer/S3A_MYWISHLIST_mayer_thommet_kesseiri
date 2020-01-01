@@ -9,7 +9,7 @@ use mywishlist\conf\Database;
 use mywishlist\controleurs\ControleurCompte;
 use mywishlist\controleurs\ControleurReservation;
 
-session_start(); //TODO Faut bien le mettre ici ? (ou parfois on la démarre pour rien ?)
+session_start();
 Database::connect();
 $app = new \Slim\Slim();
 
