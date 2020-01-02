@@ -25,9 +25,9 @@ class ControleurCompte {
         $vue = new VueCompte();
 
         if ($status != 'succes')
-            $vue->afficherErreurConnexion($status);
+            $vue->afficherConnexionAvecInfo($status);
         else
-            $vue->afficherPageGestionCompte(true);
+            $vue->afficherPageGestionCompte();
     }
 
     public static function inscription($login, $pass, $pseudo) {
@@ -52,5 +52,32 @@ class ControleurCompte {
 
     public static function deconnexion() {
         if (isset($_SESSION['user_connected'])) unset($_SESSION['user_connected']);
+    }
+
+    /**
+     * Modifie les informations du compte connecté.
+     * Si le mot de passe est modifié, déconnecte le compte.
+     * @param $newPseudo string Nouveau pseudo.
+     * @param $newPass string Nouveau mot de passe.
+     */
+    public static function modifierInformations($newPseudo, $newPass) {
+        //Vérifie bien qu'un compte est connecté.
+        if (!isset($_SESSION['user_connected']))
+            return;
+
+        $status = Authentification::modifierInformations($newPseudo, $newPass);
+        $vue = new VueCompte();
+        switch ($status) {
+            case 'mdpNonModifie':
+                $vue->afficherGestionCompteAvecInfo($status);
+                break;
+            case 'mdpModifie':
+                self::deconnexion();
+                $vue->afficherConnexionAvecInfo($status);
+                break;
+            default: //Erreur dans ce cas
+                $vue->afficherGestionCompteAvecInfo($status);
+                break;
+        }
     }
 }

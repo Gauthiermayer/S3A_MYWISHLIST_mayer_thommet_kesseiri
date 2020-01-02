@@ -15,7 +15,7 @@ class VueCompte {
         $this->app = \Slim\Slim::getInstance() ;
     }
 
-    public function afficherPageConnexion($connexion_return = null) {
+    public function afficherPageConnexion($status = null) {
         VueHeaderFooter::afficherHeader('login');
 
         $rootUri = $this->app->request->getRootUri();
@@ -35,8 +35,8 @@ class VueCompte {
                 </form>
 END;
         //------------------- Ajoute le message de retour si l'utilisateur à tenter de se connecter -------------------\\
-        if (isset($connexion_return))
-            $html_page = $html_page . $connexion_return;
+        if (isset($status))
+            $html_page = $html_page . $status;
         //------------------- Ajoute le message de retour si l'utilisateur à tenter de se connecter -------------------\\
         $html_page = $html_page .
         <<<END
@@ -53,7 +53,7 @@ END;
     }
 
     public function afficherPageInscription($erreurInscription = null) {
-        VueHeaderFooter::afficherHeader('login', 'compte.css');
+        VueHeaderFooter::afficherHeader('login', 'compte');
 
         $rootUri = $this->app->request->getRootUri();
         $urlInscription = $this->app->urlFor('inscription');
@@ -99,16 +99,19 @@ END;
     }
 
     /**
-     * Affiche le résultat de la connexion (message d'erreur)
-     * @param string $status Contient un message résultant de la connexion. (password_incorrect/login_incorrect)
+     * Affiche la page de connexion avec une information supplémentaire.
+     * @param string $status Contient un message d'information (password_incorrect/login_incorrect)
      */
-    public function afficherErreurConnexion(string $status) {
+    public function afficherConnexionAvecInfo(string $status) {
         switch ($status) {
             case 'login_incorrect' :
                 $html_code = '<div class="alert alert-danger" role="alert">Login incorrect</div>';
                 break;
             case 'password_incorrect':
                 $html_code = '<div class="alert alert-danger" role="alert">Mot de passe incorrect</div>';
+                break;
+            case 'mdpModifie':
+                $html_code = '<div class="alert alert-success" role="alert">Le mot de passe a bien été modifié</div>';
                 break;
         }
 
@@ -119,7 +122,7 @@ END;
      * Affiche la page de gestion de compte de l'utilisateur connecté.
      * Si aucun utilisateur est connecté affiche une erreur.
      */
-    public function afficherPageGestionCompte($vientDetreCree = false) {
+    public function afficherPageGestionCompte($status = null) {
         if (!isset($_SESSION['user_connected'])) {
             VueHeaderFooter::afficherHeader('login', '404');
             echo
@@ -133,24 +136,60 @@ END;
         }
 
         else {
+            $urlModificationCompte = $this->app->urlFor('modificationCompte');
             $urlConnexion = $this->app->urlFor('login');
-            VueHeaderFooter::afficherHeader('login');
+            $rootUri = $this->app->request->getRootUri();
+            VueHeaderFooter::afficherHeader('login', 'compte');
 
-            $html_page = '';
-            if ($vientDetreCree)
-                $html_page = '<div class="alert alert-success" role="alert">Vous êtes maintenant connecté !</div>';
-
-            $html_page = $html_page .
-            <<<END
-            <div class="text-center container mt-5" style="max-width: 330px">
-                <form method="get" action="$urlConnexion">
-                    <button class="btn btn-primary btn-block"   >Se déconnecter</button>
-                </form>               
-            </div>
+            $htmlPage =
+                <<<END
+                <div class="text-center container mt-5" style="max-width: 330px">
+                    <!-- Formulaire modification compte -->
+                    <form method="post" action="$urlModificationCompte">
+                        <img class="mb-4" src="$rootUri/img/login.png" alt="" width="120" height="120">                    
+                        <h1 class="h3 mb-3 font-weight-normal">Modification des données</h1>    
+                        <p class="font-italic">Laissez un champ vide pour ne pas modifier l'information associée</p>                
+                        <input type="text" name="pseudo" class="form-control" placeholder="Nouveau pseudo" autofocus>                   
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Nouveau mot de passe" >
+                        
+                        <!-- Indique à l'utilisateur la force du mot de passe -->
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+                        <p class="w-100">Force du mot de passe : <meter class="w-25"  max="4" id="password-strength-meter"></meter></p>                    
+                        <script src="http://localhost/Web/S3A_MYWISHLIST_mayer_thommet_kesseiri/js/passwordMeter.js"></script>
+                        <!-- Indique à l'utilisateur la force du mot de passe -->  
+                                                
+                        <button class="btn btn-success btn-primary btn-block" type="submit">Modifier ses informations</button>                                                                      
+                    </form>                                         
 END;
-            echo $html_page;
+            //------------------- Ajoute le message -------------------\\
+            if (isset($status))
+                $htmlPage = $htmlPage . $status;
+            //------------------- Ajoute le message -------------------\\
+
+            $htmlPage = $htmlPage .
+                <<<END
+                    <hr>
+                
+                    <form method="get" action="$urlConnexion">
+                        <button class="btn btn-primary btn-block">Se déconnecter</button>
+                    </form>               
+                </div>
+END;
+            echo $htmlPage;
         }
 
         VueHeaderFooter::afficherFooter();
+    }
+
+    public function afficherGestionCompteAvecInfo(string $status) {
+        switch ($status) {
+            case 'mdpNonModifie' :
+                $html_code = '<div class="alert alert-success" role="alert">Le pseudo a bien été modifié</div>';
+                break;
+            default: //erreur dans ce cas
+                $html_code = "<div class=\"alert alert-danger\" role=\"alert\">$status</div>";
+                break;
+        }
+        self::afficherPageGestionCompte($html_code);
     }
 }

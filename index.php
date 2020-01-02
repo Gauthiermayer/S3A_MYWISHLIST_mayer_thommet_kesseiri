@@ -95,9 +95,13 @@ $app->post('/connexion', function () {
 $app->get('/compte', function () {
    ControleurCompte::pageGestionCompte();
 });
+
+$app->post('/compte/modification', function () {
+    $app = \Slim\Slim::getInstance() ;
+    $pseudo = $app->request->post('pseudo');
+    $pass = $app->request->post('password');
+    ControleurCompte::modifierInformations($pseudo, $pass);
+})->name('modificationCompte');
 //------------------------ COMPTE ------------------------\\
 
 $app->run();
-
-
-
