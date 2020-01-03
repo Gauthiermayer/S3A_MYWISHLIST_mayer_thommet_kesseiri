@@ -40,7 +40,7 @@ Créer fichier /src/conf/conf.ini ->
 
 ##Créateur
 
-6)[] Créer une liste
+6)[x] Créer une liste
  - Un utilisateur non authentifié peut créer une nouvelle liste de souhaits
  - Un formulaire lui permet de saisir les informations générales de la liste
  - les informations sont: titre, description et date d'expiration
@@ -51,7 +51,7 @@ Créer fichier /src/conf/conf.ini ->
  - Le créateur d'une liste peut modifier les informations générales de ses listes
  - Pour modifier il doit connaître son URL de modification (avec token)
 
-8)[] Ajouter des items
+8)[x] Ajouter des items
  - Le créateur d'une liste peut ajouter des items à une de ses listes après l'avoir sélectionnée parson URL de modification (avec token)
  - Un formulaire permet de saisir les informations de l'item
  - les informations sont: nom et description et prix
@@ -89,15 +89,15 @@ Créer fichier /src/conf/conf.ini ->
  
 ##Extensions
 
-17)[] Créer un compte
+17)[x] Créer un compte
  - Tout utilisateur non inscrit peut créer un compte à l'aide d'un formulaire
  - Il choisit alors un login et un mot de passe
 
-18)[] S'authentifier
+18)[x] S'authentifier
  - Un utilisateur inscrit peut s'authentifier
  - Une variable de session permet de maintenir l'état authentifié
 
-19)[] Modifier son compte
+19)[x] Modifier son compte
  - Un utilisateur authentifié peut modifier son compte
  - Seul le login ne peut pas être modifié
  - Si il modifie son mot de passe, il doit alors à nouveau s'authentifier

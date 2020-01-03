@@ -21,19 +21,37 @@ class VueListes
         $this->app = \Slim\Slim::getInstance() ;
     }
 
+    /**
+     * Trie le tableau de listes pour que les listes privées se retrouvent en première dans le tableau.
+     * @param $array array Tableau de listes.
+     */
+    private function trierListesPrivees(& $array) {
+        usort($array, function ($listeA, $listeB) {
+            $a = $listeA['liste']['private']; //Soit 0 (non privée) soit 1 (privée)
+            $b = $listeB['liste']['private'];
 
-
+            return $b - $a;
+        });
+    }
 
     private function afficherToutesListes()
     {
         if ($this->params != NULL) {
+            $this->trierListesPrivees($this->params['listes']);
+
+            //Récupère l'utilisateur connecté pour afficher ses listes privées
+            $userConnected = 'null';
+            if (isset($_SESSION['user_connected']))
+                $userConnected = $_SESSION['user_connected']['pseudo'];
+
             echo
 <<<END
 <div class="m-3">
         <ul class="list-group">
 END;
             foreach ($this->params['listes'] as $key => $l) {
-                if($l['liste']['private'] != 1) {
+                //Pour afficher : soit la liste n'est pas privée, soit son créateur est connecté
+                if($l['liste']['private'] != 1 || ($userConnected == $l['liste']['createur_pseudo']) ) {
 
                     //$rootUri = $this->app->request->getRootUri();
                     $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['liste']['no']]);
