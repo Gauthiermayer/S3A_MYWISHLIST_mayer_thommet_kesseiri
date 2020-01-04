@@ -73,7 +73,7 @@ END;
                     <!-- Indique à l'utilisateur la force du mot de passe -->
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>               
                     <p class="w-100">Force du mot de passe : <meter class="w-25"  max="4" id="password-strength-meter"></meter></p>                    
-                    <script src="http://localhost/Web/S3A_MYWISHLIST_mayer_thommet_kesseiri/js/passwordMeter.js"></script>
+                    <script src="$rootUri/js/passwordMeter.js"></script>
                     <!-- Indique à l'utilisateur la force du mot de passe -->
                 
                     <button class="btn btn-success btn-primary btn-block" type="submit">S'inscrire</button>                                                                      
@@ -155,7 +155,7 @@ END;
                         <!-- Indique à l'utilisateur la force du mot de passe -->
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
                         <p class="w-100">Force du mot de passe : <meter class="w-25"  max="4" id="password-strength-meter"></meter></p>                    
-                        <script src="http://localhost/Web/S3A_MYWISHLIST_mayer_thommet_kesseiri/js/passwordMeter.js"></script>
+                        <script src="$rootUri/js/passwordMeter.js"></script>
                         <!-- Indique à l'utilisateur la force du mot de passe -->  
                                                 
                         <button class="btn btn-success btn-primary btn-block" type="submit">Modifier ses informations</button>                                                                      

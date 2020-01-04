@@ -33,7 +33,6 @@ class ControleurReservation
 
             if (isset($_COOKIE['reserves'])){
                 $cookie = unserialize($_COOKIE['reserves']);
-                var_dump($cookie);
                 array_push($cookie,$token_reserv);
                 $cookie = serialize($cookie);
             }

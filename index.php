@@ -26,6 +26,11 @@ $app->get('/listes/', function() {
     ControleurListes::getListes();
 })->name('listes');
 
+$app->post('/listes/', function() {
+    //Affiche toutes les listes, en priorité celles recherchées avec la search bar
+    ControleurListes::getListesRecherchees();
+})->name('recherche_listes');
+
 $app->post('/liste/create', function() {
     ControleurEditionListe::creerListe();
     ControleurEditionListe::afficherCreerListe();

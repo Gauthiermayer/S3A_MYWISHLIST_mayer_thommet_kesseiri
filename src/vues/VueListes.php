@@ -21,54 +21,67 @@ class VueListes
         $this->app = \Slim\Slim::getInstance() ;
     }
 
-    /**
-     * Trie le tableau de listes pour que les listes privées se retrouvent en première dans le tableau.
-     * @param $array array Tableau de listes.
-     */
-    private function trierListesPrivees(& $array) {
-        usort($array, function ($listeA, $listeB) {
-            $a = $listeA['liste']['private']; //Soit 0 (non privée) soit 1 (privée)
-            $b = $listeB['liste']['private'];
-
-            return $b - $a;
-        });
-    }
 
     private function afficherToutesListes()
     {
         if ($this->params != NULL) {
-            $this->trierListesPrivees($this->params['listes']);
-
-            //Récupère l'utilisateur connecté pour afficher ses listes privées
-            $userConnected = 'null';
-            if (isset($_SESSION['user_connected']))
-                $userConnected = $_SESSION['user_connected']['pseudo'];
+            $rootUri = $this->app->request->getRootUri();
+            $urlRechercheListes = $this->app->urlFor('recherche_listes');
 
             echo
 <<<END
+<script src="https://kit.fontawesome.com/4e4c13e3b5.js" crossorigin="anonymous"></script>
+<script src="$rootUri/js/searchBar.js"></script>
+<div class="container mt-3 mb-4">
+    <form action="$urlRechercheListes" method="post">
+        <div class="row d-flex justify-content-center">               
+            <div>
+                <input type="text" required class="form-control" placeholder="Pseudo de l'auteur" id="auteur" name="auteur">
+            </div>
+            <p class="my-auto pl-2 pr-1">A partir de :</p>
+            <div>                         
+                <input type="date" disabled required class="form-control" id="dateDebut" name="dateDebut">
+            </div>
+            <p class="my-auto pl-2 pr-1">jusqu'à :</p>
+            <div >
+                <input type="date" disabled required class="form-control" id="dateFin" name="dateFin">
+            </div>
+            <div class="pl-2 pr-2">
+                <select onchange="desactiverElemInutile(this.value)" class="form-control search-slt" name="typeRecherche">
+                    <option value="auteur">Recherche par auteur</option>
+                    <option value="date">Recherche par date</option>
+                </select>
+            </div>
+            <div class="p-0">
+                <button type="submit" class="btn btn-primary wrn-btn"><i class="fas fa-search"></i></button>                            
+            </div>                
+        </div>
+    </form>
+</div>
 <div class="m-3">
-        <ul class="list-group">
+    <ul class="list-group">
 END;
             foreach ($this->params['listes'] as $key => $l) {
-                //Pour afficher : soit la liste n'est pas privée, soit son créateur est connecté
-                if($l['liste']['private'] != 1 || ($userConnected == $l['liste']['createur_pseudo']) ) {
+                $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['liste']['no']]);
+                $num = $l['liste']['no'];
+                $titre = $l['liste']['titre'];
+                $desc = $l['liste']['description'];
+                $privee = $l['liste']['private'] == 1 ? 'Privée' : '';
+                $createur_pseudo = $l['liste']['createur_pseudo'];
+                $nb_items = $l['nb'];
+                $expiree = date_format(date_create($l['liste']['expiration']), 'd/m/Y');
 
-                    //$rootUri = $this->app->request->getRootUri();
-                    $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['liste']['no']]);
-                    $num = $l['liste']['no'];
-                    $titre = $l['liste']['titre'];
-                    $desc = $l['liste']['description'];
-                    $createur_pseudo = $l['liste']['createur_pseudo'];
-                    $nb_items = $l['nb'];
-
-                    echo
+                echo
 <<<END
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href=" $listeUrl"> $titre : $desc par $createur_pseudo.</a>
-             <span class="badge badge-primary badge-pill">$nb_items items</span>
+             <a href=" $listeUrl">$titre : $desc par <p class="font-weight-bold custom-control-inline mb-0">$createur_pseudo</p></a>
+             <div>
+                 <span class="badge badge-info badge-pill">$privee</span>
+                 <span class ="badge badge-success badge-pill">$expiree</span>               
+                 <span class="badge badge-primary badge-pill">$nb_items items</span>
+             </div>           
         </li>
 END;
-                }
             }
             echo
 <<<END

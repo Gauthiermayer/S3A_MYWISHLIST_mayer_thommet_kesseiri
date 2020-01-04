@@ -106,7 +106,7 @@ Créer fichier /src/conf/conf.ini ->
  - Le créateur d'une liste peut la rendre publique 
  - Les listes publiques apparaissent dans la liste publique des listes de souhaits
 
-21)[] Afficher les listes de souhaits publiques
+21)[x] Afficher les listes de souhaits publiques
  - Tout utilisateur non enregistré peut consulter la liste des listes de souhaits publiques à partir de la page d'accueil
  - Seuls les titres de liste apparaissent
  - Les listes en cours de création (non validées par leur créateur) et les listes expirées n'apparaissent pas
