@@ -61,27 +61,39 @@ class VueListes
 <div class="m-3">
     <ul class="list-group">
 END;
-            foreach ($this->params['listes'] as $key => $l) {
-                $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['liste']['no']]);
-                $num = $l['liste']['no'];
-                $titre = $l['liste']['titre'];
-                $desc = $l['liste']['description'];
-                $privee = $l['liste']['private'] == 1 ? 'Privée' : '';
-                $createur_pseudo = $l['liste']['createur_pseudo'];
-                $nb_items = $l['nb'];
-                $expiree = date_format(date_create($l['liste']['expiration']), 'd/m/Y');
-
+            //Si aucune listes à afficher
+            if (count($this->params['listes']) == 0) {
                 echo
-<<<END
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-             <a href=" $listeUrl">$titre : $desc par <p class="font-weight-bold custom-control-inline mb-0">$createur_pseudo</p></a>
-             <div>
-                 <span class="badge badge-info badge-pill">$privee</span>
-                 <span class ="badge badge-success badge-pill">$expiree</span>               
-                 <span class="badge badge-primary badge-pill">$nb_items items</span>
-             </div>           
-        </li>
+                <<<END
+                <li class="list-group-item text-center">
+                    <h2>Aucune liste ne correspond aux critères de recherche</h2>
+                </li>
 END;
+
+            }
+
+            else {
+                foreach ($this->params['listes'] as $key => $l) {
+                    $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['liste']['no']]);
+                    $titre = $l['liste']['titre'];
+                    $desc = $l['liste']['description'];
+                    $privee = $l['liste']['private'] == 1 ? 'Privée' : '';
+                    $createur_pseudo = $l['liste']['createur_pseudo'];
+                    $nb_items = $l['nb'];
+                    $expiree = date_format(date_create($l['liste']['expiration']), 'd/m/Y');
+
+                    echo
+                    <<<END
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                         <a href=" $listeUrl">$titre : $desc par <p class="font-weight-bold custom-control-inline mb-0">$createur_pseudo</p></a>
+                         <div>
+                             <span class="badge badge-info badge-pill">$privee</span>
+                             <span class ="badge badge-success badge-pill">$expiree</span>               
+                             <span class="badge badge-primary badge-pill">$nb_items items</span>
+                         </div>           
+                    </li>
+END;
+                }
             }
             echo
 <<<END
