@@ -71,9 +71,7 @@ END;
         <footer class="footer" style="background-color: #005cbf">
         
           <!-- Copyright -->
-          <div class="text-center py-3">© 2019 Copyright:
-            <a href="http://www.google.fr"> Github.com</a>
-          </div>
+          <p class="text-center pt-3">© 2020</p>
           <!-- Copyright -->
         
         </footer>
@@ -81,5 +79,4 @@ END;
     </html>
 END;
     }
-
 }

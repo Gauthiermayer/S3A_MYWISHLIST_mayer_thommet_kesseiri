@@ -15,7 +15,8 @@ class VueEditionCreationListe
         $this->app = \Slim\Slim::getInstance() ;
     }
 
-    private function afficherCreation($erreurCreation = null){
+    private function afficherCreation(){
+        $rootUri = $this->app->request->getRootUri();
         echo
 <<<END
 <form class="container mt-5" style="max-width: 700px" method="post" action="">
@@ -29,9 +30,11 @@ class VueEditionCreationListe
   </div>
   
   <div class="form-group">
-    <label for="date">Date d'expiration</label>  
-    <input size="16" class="form-control" type="text" placeholder="31/12/2099" name ="date">    
-  </div> 
+    <label for="date">Date d'expiration</label>
+    <input size="16" class="form-control" type="date" name ="date" id="date">
+    <div id="erreurDate" style="display: none" class="alert alert-danger">Veuillez rentrer une date d'expiration après aujourd'hui</div>    
+  </div>
+  <script src="$rootUri/js/dateChecker.js"></script>  
    
   <div class="form-check">
     <input type="checkbox" name="private" class="form-check-input" id="private">
@@ -39,8 +42,7 @@ class VueEditionCreationListe
   </div>
     
   <button type="submit" class="btn btn-primary mb-3 mt-3">Envoyer</button>
-</form>  
-
+</form>
 END;
     }
 
@@ -95,9 +97,6 @@ END;
                 break;
             case 'creationItem':
                 $this->afficherAjoutItem();
-                break;
-            case 'creationListeErreur':
-                $this->afficherCreation('Une liste porte déjà ce nom');
                 break;
         }
 

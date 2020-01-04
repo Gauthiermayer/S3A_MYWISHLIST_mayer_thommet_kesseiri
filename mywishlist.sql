@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 31 déc. 2019 à 14:03
+-- Généré le :  sam. 04 jan. 2020 à 17:01
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.3.5
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `compte` (
 --
 
 INSERT INTO `compte` (`username`, `password`, `pseudo`, `role`) VALUES
-('admin', '$2y$12$NmyIhfCTl0wf6zp22losKeho.ud8KG/LmBr9iujqMTTYAxQqoxqBm', 'admin57', 'admin');
+('admin', '$2y$12$sUM0h57wSfuIItP6W7YC1OLK5nK/.YkL0LZDPFo/MJP3i9U4na0JC', 'admin57', 'user');
 
 -- --------------------------------------------------------
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `liste` (
   `private` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`no`),
   KEY `FK_createur_liste` (`createur_pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `liste`
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 -- Contraintes pour la table `liste`
 --
 ALTER TABLE `liste`
-  ADD CONSTRAINT `FK_createur_liste` FOREIGN KEY (`createur_pseudo`) REFERENCES `compte` (`pseudo`) ON DELETE SET NULL;
+  ADD CONSTRAINT `FK_createur_liste` FOREIGN KEY (`createur_pseudo`) REFERENCES `compte` (`pseudo`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

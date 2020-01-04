@@ -27,6 +27,15 @@ class ControleurEditionListe
     }
 
     public static function creerListe(){
+        if (isset($_POST['date']) && $_POST['date'] != ''){
+            $date = $_POST['date'];
+            if (date('Y-m-d') >= $date)
+                return;
+        }
+        else{
+            $date = '31/12/2099';
+        }
+
         if (isset($_POST['liste_name']) && $_POST['liste_name'] != ''){
             $nom = filter_var($_POST['liste_name'],FILTER_SANITIZE_SPECIAL_CHARS);
         }
@@ -56,15 +65,6 @@ class ControleurEditionListe
         else{
             $private = 0;
         }
-
-        if (isset($_POST['date']) && $_POST['date'] != ''){
-            $date = $_POST['date'];
-        }
-        else{
-            $date = '31/12/2099';
-        }
-
-        $date = \DateTime::createFromFormat('d/m/Y', $date);
 
         $liste = new Liste();
 
