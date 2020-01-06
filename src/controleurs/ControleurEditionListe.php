@@ -101,7 +101,7 @@ class ControleurEditionListe
         $liste->save();
 
         //redirection vers la page d'affichage de la liste
-        header("Location: ./$liste->no");
+        header("Location: ./$liste->token");
         exit(0);
     }
 

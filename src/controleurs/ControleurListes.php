@@ -62,18 +62,19 @@ class ControleurListes {
         });
     }
 
-    public static function getAllItems($id_liste){
+    public static function getAllItems($token_liste) {
+        $liste = Liste::where('token', '=', $token_liste)->first();
+        $id_liste = $liste->no;
+        $token = $liste->token;
         $items = Item::all()->where('liste_id','=',$id_liste)->toArray();
-        $liste = Liste::all()->find($id_liste);
-        $token = $liste['token'];
+
         $isCreator = false;
-        if (isset($_COOKIE['created'])) {
-            $created = unserialize($_COOKIE['created']);
-            if (in_array($token, $created)) {
+        if (isset($_SESSION['user_connected'])) {
+            if ($_SESSION['user_connected']['pseudo'] == $liste->createur_pseudo)
                 $isCreator = true;
-            }
         }
-        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'liste_id' => $id_liste, 'titreListe' => $liste->titre]);
+
+        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'liste_id' => $id_liste, 'titreListe' => $liste->titre, 'token_liste' => $token]);
         $vue->afficher("liste");
     }
 

@@ -74,11 +74,11 @@ END;
 
             else {
                 foreach ($this->params['listes'] as $key => $l) {
-                    $listeUrl = $this->app->urlFor('route_liste', ['id_liste' => $l['liste']['no']]);
+                    $listeUrl = $this->app->urlFor('route_liste', ['token_liste' => $l['liste']['token']]);
                     $titre = $l['liste']['titre'];
                     $desc = $l['liste']['description'];
                     $privee = $l['liste']['private'] == 1 ? 'Privée' : '';
-                    $createur_pseudo = $l['liste']['createur_pseudo'];
+                    $createur_pseudo = $l['liste']['createur_pseudo'] != null ? $l['liste']['createur_pseudo'] : 'Anonyme' ;
                     $nb_items = $l['nb'];
                     $expiree = date_format(date_create($l['liste']['expiration']), 'd/m/Y');
 
@@ -117,7 +117,7 @@ END;
             $rootUri = $this->app->urlFor('default', []);
 
             foreach ($this->params['items'] as $key => $items) {
-                $itemUrl = $this->app->urlFor('route_item', ['id_liste' => $items['liste_id'], 'id_item' => $items['id']]);
+                $itemUrl = $this->app->urlFor('route_item', ['token_liste' => $this->params['token_liste'], 'id_item' => $items['id']]);
                 $num = $items['id'];
                 $titre = $items['nom'];
                 $desc = $items['descr'];
@@ -140,7 +140,6 @@ END;
 <div class="col mb-4">
 <div class="card h-100 m-3" style="width: 18rem;">
   <img class="card-img-top m-auto" src="$routeImg" alt=$desc style="width: 17.9rem;height: 180px ">  
-
       <div class="card-body">
         <h5 class="card-title">$titre</h5>
         <p class="card-text">$desc.</p>

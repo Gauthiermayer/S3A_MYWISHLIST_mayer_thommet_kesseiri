@@ -41,13 +41,13 @@ $app->get('/liste/create', function() {
     ControleurEditionListe::afficherCreerListe();
 })->name('creation_liste');
 
-$app->get('/liste/:id_liste', function($id_liste) {
-    //echo "Affiche tous les items de la liste ".$id_liste;
-    ControleurListes::getAllItems($id_liste);
+$app->get('/liste/:token_liste', function($token_liste) {
+    //Affiche la liste à partir de son token
+    ControleurListes::getAllItems($token_liste);
 })->name('route_liste');
 
-$app->get('/liste/:id_liste/item/:id_item', function($id_liste, $id_item) {
-    //echo "Affiche l'item ".$id_item." de la liste ".$id_liste;
+$app->get('/liste/:token_liste/item/:id_item', function($token_liste, $id_item) {
+    //Affiche l'item de la liste
     ControleurListes::getItem($id_item);
 })->name('route_item');
 
