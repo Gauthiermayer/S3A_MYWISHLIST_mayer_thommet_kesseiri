@@ -106,7 +106,8 @@ class ControleurEditionListe
     }
 
     public static function ajouterItem($token_item){
-        $liste = Liste::all()->find($token_item);
+        $liste = Liste::where('token', '=', $token_item)->first();
+        $id_liste = $liste->no;
         $token = $liste['token'];
         if (isset($_COOKIE['created'])) {
             $created = unserialize($_COOKIE['created']);

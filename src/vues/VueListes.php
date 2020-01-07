@@ -150,7 +150,8 @@ END;
             }
 
             if ($this->params['creator']){
-                $urlAdd = $this->app->urlFor('form_ajout_item',['id_liste' => $id_liste]);
+                $urlAdd = $this->app->urlFor('form_ajout_item',['id_liste' => $id_liste,
+                                                                        'token_liste' => $this->params['token_liste']]);
                 $urlImg = $rootUri . 'img/' . 'defaut.jpg';
                 echo
 <<<END
