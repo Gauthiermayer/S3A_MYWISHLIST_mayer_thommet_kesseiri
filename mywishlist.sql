@@ -112,9 +112,9 @@ CREATE TABLE IF NOT EXISTS `liste` (
 --
 
 INSERT INTO `liste` (`no`, `createur_pseudo`, `titre`, `description`, `expiration`, `token`, `private`) VALUES
-(1, NULL, 'Pour fêter le bac !', 'Pour un week-end à Nancy qui nous fera oublier les épreuves. ', '2018-06-27', 'nosecure1', 0),
-(2, NULL, 'Liste de mariage d Alice et Bob', 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)', '2018-06-30', 'nosecure2', 0),
-(3, NULL, 'C est l anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2017-12-12', 'nosecure3', 0);
+(1, NULL, 'Pour fêter le bac !', 'Pour un week-end à Nancy qui nous fera oublier les épreuves. ', '2021-06-27', 'nosecure1', 0),
+(2, NULL, 'Liste de mariage d Alice et Bob', 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)', '2021-06-30', 'nosecure2', 0),
+(3, NULL, 'C est l anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2021-12-12', 'nosecure3', 0);
 
 -- --------------------------------------------------------
 
