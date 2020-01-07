@@ -143,6 +143,15 @@ END;
         <h5 class="card-title">$titre</h5>
         <p class="card-text">$desc.</p>
         <a href="$itemUrl" class="btn btn-primary">Réserver</a>
+END;
+                if ($this->params['creator']){
+                    $urlSupp = $this->app->urlFor('supprimer_item',['token_liste' => $this->params['token_liste'],'id_item' => $items['id']]);
+                    echo
+                    <<<END
+                        <a href="$urlSupp" class="btn btn-danger">supprimer</a>
+END;
+                }
+        echo <<<END
       </div>
   </div>
 </div>
@@ -204,7 +213,7 @@ END;
                 }
             }
 
-            //var_dump($this->params['reserve']);
+            //var_dump($this->params['reserve']['message']);
             if($this->params['reserve']){
                 $disabled = 'disabled';
                 $button = 'Réservé';
@@ -235,7 +244,7 @@ END;
     <form class="mt-5" style="max-width: 200px" method="post" action="$url_reserv">
         <div class="form-group">
             <label for="nom">Votre nom</label>
-            <input type="text" class="form-control" name="nom" aria-describedby="nom" placeholder="$nom" $disabled>    
+            <input type="text" class="form-control" name="nom" aria-describedby="nom" placeholder="$nom" $disabled>
          </div>
         <button type="submit" class="btn btn-primary mb-3 mt-3" $style $disabled>$button</button>
     </form>

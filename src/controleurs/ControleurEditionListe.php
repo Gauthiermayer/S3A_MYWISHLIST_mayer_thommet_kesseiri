@@ -7,6 +7,7 @@ namespace mywishlist\controleurs;
 use mywishlist\models\Item;
 use mywishlist\models\Liste;
 use mywishlist\vues\VueEditionCreationListe;
+use mywishlist\vues\VueListes;
 
 class ControleurEditionListe
 {
@@ -153,6 +154,14 @@ class ControleurEditionListe
 
                 $item->save();
             }
+        }
+    }
+
+    public static function supprimerItem($token,$id_item){
+        $item = Item::where('id','=',$id_item)->first();
+        if(isset($_COOKIE['created'])){
+            $item->delete();
+            ControleurListes::getAllItems($token);
         }
     }
 
