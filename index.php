@@ -61,12 +61,12 @@ $app->post('/liste/:id_liste/item/:id_item/annulerReservation', function($id_lis
     ControleurListes::getItem($id_item);
 })->name('annuler_reservation');
 
-$app->post('/liste/:id_liste/ajouterItem', function($id_liste) {
-    ControleurEditionListe::ajouterItem($id_liste);
-    ControleurListes::getAllItems($id_liste);
+$app->post('/liste/:token_liste/ajouterItem', function($token_liste) {
+    ControleurEditionListe::ajouterItem($token_liste);
+    ControleurListes::getAllItems($token_liste);
 })->name('ajouter_item');
 
-$app->get('/liste/:id_liste/ajouterItem', function($id_liste) {
+$app->get('/liste/:token_liste/ajouterItem', function() {
     ControleurEditionListe::afficherCreerItem();
 })->name('form_ajout_item');
 //------------------------ LISTE ------------------------\\

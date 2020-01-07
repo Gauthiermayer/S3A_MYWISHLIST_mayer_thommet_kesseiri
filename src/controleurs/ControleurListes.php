@@ -101,7 +101,7 @@ class ControleurListes {
         switch ($_POST['typeRecherche']) {
             case 'auteur':
                 $auteur = $_POST['auteur'];
-                self::getListes(Liste::where('createur_pseudo', '=', "$auteur")->get());
+                self::getListes(Liste::where('createur_pseudo', '=', $auteur)->get());
                 break;
 
             case 'date':

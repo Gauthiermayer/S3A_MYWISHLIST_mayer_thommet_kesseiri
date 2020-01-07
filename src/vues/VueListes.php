@@ -30,7 +30,6 @@ class VueListes
 
             echo
 <<<END
-<script src="https://kit.fontawesome.com/4e4c13e3b5.js" crossorigin="anonymous"></script>
 <script src="$rootUri/js/searchBar.js"></script>
 <div class="container mt-3 mb-4">
     <form action="$urlRechercheListes" method="post">

@@ -47,6 +47,7 @@ END;
             <title>Wishlist</title>
         </head>
         <body class="">
+        <script src="https://kit.fontawesome.com/4e4c13e3b5.js" crossorigin="anonymous"></script>
 
         <div class="header">
           <a href="#default" class="logo">MyWishlist</a>

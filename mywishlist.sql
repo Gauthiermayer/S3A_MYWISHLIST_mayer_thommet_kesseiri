@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 04 jan. 2020 à 17:01
+-- Généré le :  mar. 07 jan. 2020 à 10:10
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.3.5
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `item` (
   `url` text,
   `tarif` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `item`
@@ -86,7 +86,9 @@ INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`) VAL
 (24, 2, 'Hôtel d Haussonville', 'Hôtel d Haussonville, au coeur de la Vieille ville à deux pas de la place Stanislas', 'hotel_haussonville_logo.jpg', '', '169.00'),
 (25, 1, 'Boite de nuit', 'Discothèque, Boîte tendance avec des soirées à thème & DJ invités', 'boitedenuit.jpg', '', '32.00'),
 (26, 1, 'Planètes Laser', 'Laser game : Gilet électronique et pistolet laser comme matériel, vous voilà équipé.', 'laser.jpg', '', '15.00'),
-(27, 1, 'Fort Aventure', 'Découvrez Fort Aventure à Bainville-sur-Madon, un site Accropierre unique en Lorraine ! Des Parcours Acrobatiques pour petits et grands, Jeu Mission Aventure, Crypte de Crapahute, Tyrolienne, Saut à l élastique inversé, Toboggan géant... et bien plus encore.', 'fort.jpg', '', '25.00');
+(27, 1, 'Fort Aventure', 'Découvrez Fort Aventure à Bainville-sur-Madon, un site Accropierre unique en Lorraine ! Des Parcours Acrobatiques pour petits et grands, Jeu Mission Aventure, Crypte de Crapahute, Tyrolienne, Saut à l élastique inversé, Toboggan géant... et bien plus encore.', 'fort.jpg', '', '25.00'),
+(28, 36, 'Sacha Thommet', 'dazdaz', 'contact.jpg', '', '21.00'),
+(29, 36, 'dadazdazda', 'dazdaz', 'contact.jpg', '', '21.00');
 
 -- --------------------------------------------------------
 
@@ -104,8 +106,9 @@ CREATE TABLE IF NOT EXISTS `liste` (
   `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `private` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`no`),
+  UNIQUE KEY `UNIQUE_TOKEN` (`token`),
   KEY `FK_createur_liste` (`createur_pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `liste`
@@ -114,7 +117,9 @@ CREATE TABLE IF NOT EXISTS `liste` (
 INSERT INTO `liste` (`no`, `createur_pseudo`, `titre`, `description`, `expiration`, `token`, `private`) VALUES
 (1, NULL, 'Pour fêter le bac !', 'Pour un week-end à Nancy qui nous fera oublier les épreuves. ', '2021-06-27', 'nosecure1', 0),
 (2, NULL, 'Liste de mariage d Alice et Bob', 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)', '2021-06-30', 'nosecure2', 0),
-(3, NULL, 'C est l anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2021-12-12', 'nosecure3', 0);
+(3, NULL, 'C est l anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2021-12-12', 'nosecure3', 0),
+(36, 'admin57', 'Testttt', 'aaaaaa', '2020-01-08', '353b6732a8', 0),
+(37, 'admin57', 'oazkdoazkd', 'okdazpkdazd', '2020-01-16', '91a7d88b4d', 0);
 
 -- --------------------------------------------------------
 
