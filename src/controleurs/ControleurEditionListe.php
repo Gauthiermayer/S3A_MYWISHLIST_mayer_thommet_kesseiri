@@ -159,10 +159,10 @@ class ControleurEditionListe
 
     public static function supprimerItem($token,$id_item){
         $item = Item::where('id','=',$id_item)->first();
-        if(isset($_COOKIE['created'])){
+        if(isset($_COOKIE['created']) && $item != null){
             $item->delete();
-            ControleurListes::getAllItems($token);
         }
+        ControleurListes::getAllItems($token);
     }
 
 }

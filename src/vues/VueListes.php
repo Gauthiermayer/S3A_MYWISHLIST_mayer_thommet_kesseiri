@@ -148,7 +148,7 @@ END;
                     $urlSupp = $this->app->urlFor('supprimer_item',['token_liste' => $this->params['token_liste'],'id_item' => $items['id']]);
                     echo
                     <<<END
-                        <a href="$urlSupp" class="btn btn-danger">supprimer</a>
+                        <a href="$urlSupp" class="btn btn-danger float-right">supprimer</a>
 END;
                 }
         echo <<<END
