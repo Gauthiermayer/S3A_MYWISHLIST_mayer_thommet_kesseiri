@@ -105,7 +105,6 @@ END;
 
         private function afficherAllItems(){
         if ($this->params != NULL) {
-            $id_liste = $this->params['liste_id'];
             $titreListe = $this->params['titreListe'];
             echo
 <<<END
@@ -148,7 +147,7 @@ END;
                     $urlSupp = $this->app->urlFor('supprimer_item',['token_liste' => $this->params['token_liste'],'id_item' => $items['id']]);
                     echo
                     <<<END
-                        <a href="$urlSupp" class="btn btn-danger float-right">supprimer</a>
+                        <a href="$urlSupp" class="btn btn-danger float-right">Supprimer</a>
 END;
                 }
         echo <<<END
@@ -159,8 +158,7 @@ END;
             }
 
             if ($this->params['creator']){
-                $urlAdd = $this->app->urlFor('form_ajout_item',['id_liste' => $id_liste,
-                                                                        'token_liste' => $this->params['token_liste']]);
+                $urlAdd = $this->app->urlFor('form_ajout_item',['token_liste' => $this->params['token_liste']]);
                 $urlImg = $rootUri . 'img/' . 'defaut.jpg';
                 echo
 <<<END
@@ -219,7 +217,7 @@ END;
                 $button = 'Réservé';
             }
 
-            $url_reserv = $this->app->urlFor('reserver_item', ['id_liste' => $this->params['item']['liste_id'], 'id_item' => $this->params['item']['id']]);;
+            $url_reserv = $this->app->urlFor('reserver_item', ['token_liste' => $this->params['item']['tokenListe'], 'id_item' => $this->params['item']['id']]);;
             if (isset($_COOKIE['reserves'])) {
                 $reserves = unserialize($_COOKIE['reserves']);
                 //var_dump($reserves);
@@ -228,7 +226,7 @@ END;
                     $button = 'Annuler';
                     $nom = $this->params['reservation']['message'];
                     $style = 'style="background-color: #bd2130"';
-                    $url_reserv = $this->app->urlFor('annuler_reservation', ['id_liste' => $this->params['item']['liste_id'], 'id_item' => $this->params['item']['id']]);;
+                    $url_reserv = $this->app->urlFor('annuler_reservation', ['token_liste' => $this->params['item']['tokenListe'], 'id_item' => $this->params['item']['id']]);;
                 }
             }
 

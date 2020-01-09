@@ -31,7 +31,7 @@ class ControleurListes {
             if( ($liste['private'] != 1 || ($userConnected == $liste['createur_pseudo']))
                 && date('Y-m-d') <= $liste['expiration']) { //N'affiche que les listes encore valides
 
-                $nb_items = Item::all()->where('liste_id', '=', $liste['no'])->count();
+                $nb_items = Item::all()->where('tokenListe', '=', $liste['token'])->count();
                 array_push($params['listes'], ['liste' => $liste, 'nb' => $nb_items]);
             }
         }
@@ -62,23 +62,40 @@ class ControleurListes {
         });
     }
 
-    public static function getAllItems($token_liste) {
+    /**
+     * Vérifie si l'utilisateur est le créateur de la liste.
+     * @param $token_liste string Token de la liste.
+     * @return bool true si c'est le créateur, false sinon.
+     */
+    private static function isCreator($token_liste) {
         $liste = Liste::where('token', '=', $token_liste)->first();
-        $id_liste = $liste->no;
-        $token = $liste->token;
-        $items = Item::all()->where('liste_id','=',$id_liste)->toArray();
 
-        $isCreator = false;
-        if (isset($_SESSION['user_connected'])) {
-            if ($_SESSION['user_connected']['pseudo'] == $liste->createur_pseudo)
-                $isCreator = true;
+        //test d'abord avec le compte
+        if (isset($_SESSION['user_connected']) &&
+            $_SESSION['user_connected']['pseudo'] == $liste->createur_pseudo)
+                return true;
+
+        //sinon avec le cookie created si l'utilisateur n'est pas connecté
+        if (isset($_COOKIE['created'])) {
+            $cookie = unserialize($_COOKIE['created']);
+            return in_array($token_liste, $cookie);
         }
 
-        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'liste_id' => $id_liste, 'titreListe' => $liste->titre, 'token_liste' => $token]);
+        return false;
+    }
+
+    public static function getAllItems($token_liste) {
+        $liste = Liste::where('token', '=', $token_liste)->first();
+        $token = $liste->token;
+        $items = Item::all()->where('tokenListe','=',$token)->toArray();
+
+        $isCreator = self::isCreator($token_liste);
+
+        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'titreListe' => $liste->titre, 'token_liste' => $token]);
         $vue->afficher("liste");
     }
 
-    public static function getItem($id_item){
+    public static function getItem($id_item) {
         $reserv = Reservation::all()->where('idItem','=',$id_item)->toArray();
         if(sizeof($reserv) != 0){
             foreach ($reserv as $key => $val){
@@ -89,8 +106,7 @@ class ControleurListes {
             $reserv = NULL;
         }
         $item = Item::all()->find($id_item);
-        $liste = Liste::all()->find($item['liste_id']);
-        $vue = new VueListes(['item' => $item, 'token_list' => $liste['token'], 'reserve' => $reserv != NULL, 'reservation' => $reserv]);
+        $vue = new VueListes(['item' => $item, 'token_list' => $item->tokenListe, 'reserve' => $reserv != NULL, 'reservation' => $reserv]);
         $vue->afficher("item");
     }
 

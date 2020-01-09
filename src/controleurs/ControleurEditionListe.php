@@ -7,7 +7,6 @@ namespace mywishlist\controleurs;
 use mywishlist\models\Item;
 use mywishlist\models\Liste;
 use mywishlist\vues\VueEditionCreationListe;
-use mywishlist\vues\VueListes;
 
 class ControleurEditionListe
 {
@@ -34,7 +33,7 @@ class ControleurEditionListe
                 return;
         }
         else{
-            $date = '31/12/2099';
+            $date = \DateTime::createFromFormat('d/m/Y', '31/12/2099');
         }
 
         if (isset($_POST['liste_name']) && $_POST['liste_name'] != ''){
@@ -108,7 +107,6 @@ class ControleurEditionListe
 
     public static function ajouterItem($token_item){
         $liste = Liste::where('token', '=', $token_item)->first();
-        $id_liste = $liste->no;
         $token = $liste['token'];
         if (isset($_COOKIE['created'])) {
             $created = unserialize($_COOKIE['created']);
@@ -145,12 +143,12 @@ class ControleurEditionListe
                 }
 
                 $item = new Item();
-                $item->liste_id = $id_liste;
                 $item->nom = $nom;
                 $item->descr = $desc;
                 $item->img = $image;
                 $item->url = $url_image;
                 $item->tarif = $prix;
+                $item->tokenListe = $token_item;
 
                 $item->save();
             }

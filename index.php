@@ -51,13 +51,13 @@ $app->get('/liste/:token_liste/item/:id_item', function($token_liste, $id_item) 
     ControleurListes::getItem($id_item);
 })->name('route_item');
 
-$app->post('/liste/:id_liste/item/:id_item/reserver', function($id_liste, $id_item) {
-    ControleurReservation::reserverItem($id_item,$id_liste);
+$app->post('/liste/:token_liste/item/:id_item/reserver', function($token_liste, $id_item) {
+    ControleurReservation::reserverItem($id_item, $token_liste);
     ControleurListes::getItem($id_item);
 })->name('reserver_item');
 
-$app->post('/liste/:id_liste/item/:id_item/annulerReservation', function($id_liste, $id_item) {
-    ControleurReservation::annulerReservation($id_item,$id_liste);
+$app->post('/liste/:token_liste/item/:id_item/annulerReservation', function($token_liste, $id_item) {
+    ControleurReservation::annulerReservation($id_item, $token_liste);
     ControleurListes::getItem($id_item);
 })->name('annuler_reservation');
 
