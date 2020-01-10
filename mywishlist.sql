@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 09 jan. 2020 à 16:07
+-- Généré le :  ven. 10 jan. 2020 à 08:04
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.3.5
 
@@ -129,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `message` varchar(250) NOT NULL,
   `tokenReserv` varchar(100) NOT NULL,
   `nomParticipant` varchar(50) NOT NULL,
+  PRIMARY KEY (`idItem`,`tokenListe`),
   KEY `FK_Reservation_Liste` (`tokenListe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -152,6 +153,7 @@ ALTER TABLE `liste`
 -- Contraintes pour la table `reservation`
 --
 ALTER TABLE `reservation`
+  ADD CONSTRAINT `FK_Reservation_Item` FOREIGN KEY (`idItem`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_Reservation_Liste` FOREIGN KEY (`tokenListe`) REFERENCES `liste` (`token`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
