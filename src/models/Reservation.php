@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Reservation extends Model
 {
     protected $table = 'reservation';
-    protected $primaryKey = ['idItem', 'idListe'];
+    protected $primaryKey = ['idItem', 'tokenListe'];
     public $timestamps = false;
     public $incrementing = false;
 
@@ -19,7 +19,7 @@ class Reservation extends Model
     }
 
     public function getListe() {
-        return $this->belongsTo('mywishlist\models\Liste', 'idListe');
+        return $this->belongsTo('mywishlist\models\Liste', 'token');
     }
 
      // /!\ cette méthode permet d'utiliser la table qui a une clé primaire composée

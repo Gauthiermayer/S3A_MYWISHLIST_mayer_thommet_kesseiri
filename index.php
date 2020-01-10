@@ -70,8 +70,8 @@ $app->get('/liste/:token_liste/ajouterItem', function() {
     ControleurEditionListe::afficherCreerItem();
 })->name('form_ajout_item');
 
-$app->get('/liste/:token_liste/item/:id_item/supprimerItem', function($id_liste,$id_item) {
-    ControleurEditionListe::supprimerItem($id_liste,$id_item);
+$app->get('/liste/:token_liste/item/:id_item/supprimerItem', function($token_liste,$id_item) {
+    ControleurEditionListe::supprimerItem($token_liste,$id_item);
 })->name('supprimer_item');
 
 //------------------------ LISTE ------------------------\\

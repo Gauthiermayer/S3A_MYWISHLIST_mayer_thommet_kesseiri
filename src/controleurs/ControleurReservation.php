@@ -10,8 +10,8 @@ use mywishlist\models\Reservation;
 class ControleurReservation
 {
 
-    public static function reserverItem($id_item, $id_liste){
-        $liste = Liste::all()->find($id_liste);
+    public static function reserverItem($id_item, $token_liste){
+        $liste = Liste::all()->find($token_liste);
         $token = $liste['token'];
 
         //vérifie si la personne qui reserve n'est pas le créateur de la liste
@@ -44,23 +44,30 @@ class ControleurReservation
 
             $reserv = new Reservation();
             $reserv->idItem = $id_item;
-            $reserv->idListe = $id_liste;
+            $reserv->tokenListe = $token_liste;
             $reserv->tokenReserv = $token_reserv;
             if (isset($_POST['nom'])){
-                $reserv->message = filter_var($_POST['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
+                $reserv->nomParticipant = filter_var($_POST['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
             }
             else{
-                $reserv->message = 'Anonymous';
+                $reserv->nomParticipant = 'Anonymous';
             }
-            $reserv->save([$id_item, $id_liste]);
+            if (isset($_POST['message'])){
+                $reserv->message = filter_var($_POST['message'], FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+            else{
+                $reserv->message = '';
+            }
+
+            $reserv->save([$id_item, $token]);
         }
         else{ //déja reservé
             //TODO AFFICHER ERREUR DEJA RESERVE
         }
     }
 
-    public static function annulerReservation($id_item,$id_liste){
-        $reservation = Reservation::all()->where('idItem','=',$id_item)->where('idListe','=',$id_liste)->first();
+    public static function annulerReservation($id_item,$token_liste){
+        $reservation = Reservation::all()->where('idItem','=',$id_item)->where('tokenListe','=',$token_liste)->first();
         $token = $reservation['tokenReserv'];
         if (isset($_COOKIE['reserves'])) {
             $reserves = unserialize($_COOKIE['reserves']);

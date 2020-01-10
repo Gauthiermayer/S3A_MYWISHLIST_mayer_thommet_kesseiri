@@ -202,6 +202,7 @@ END;
             $disabled = '';
             $button = 'Réserver';
             $nom = 'Michel';
+            $message = '';
             $style = '';
             if (isset($_COOKIE['created'])) {
                 $created = unserialize($_COOKIE['created']);
@@ -224,7 +225,8 @@ END;
                 if (in_array($this->params['reservation']['tokenReserv'], $reserves)) {
                     $disabled = '';
                     $button = 'Annuler';
-                    $nom = $this->params['reservation']['message'];
+                    $nom = $this->params['reservation']['nomParticipant'];
+                    $message = $this->params['reservation']['message'];
                     $style = 'style="background-color: #bd2130"';
                     $url_reserv = $this->app->urlFor('annuler_reservation', ['token_liste' => $this->params['item']['tokenListe'], 'id_item' => $this->params['item']['id']]);;
                 }
@@ -243,6 +245,8 @@ END;
         <div class="form-group">
             <label for="nom">Votre nom</label>
             <input type="text" class="form-control" name="nom" aria-describedby="nom" placeholder="$nom" $disabled>
+              <label for="nom">Votre message</label>
+            <input type="text" class="form-control" name="message" aria-describedby="message" placeholder="$message" $disabled>
          </div>
         <button type="submit" class="btn btn-primary mb-3 mt-3" $style $disabled>$button</button>
     </form>
