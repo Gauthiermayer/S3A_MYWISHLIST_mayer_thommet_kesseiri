@@ -105,10 +105,17 @@ END;
 
         private function afficherAllItems(){
         if ($this->params != NULL) {
-            $titreListe = $this->params['titreListe'];
+            $titreListe = $this->params['titreListe'];#
+            $rootUri = $this->app->request->getRootUri();
+
             echo
 <<<END
-<p class="h1 text-center">$titreListe</p>
+<div class="text-center">
+<p class="h1">$titreListe</p>
+<button id="partager" class="btn btn-primary">Partager la liste <i class="fas fa-share-square"></i></button>
+<script src="$rootUri/js/copyURLToClipboard.js"></script>
+</div>
+
 <div class="row row-cols-1 row-cols-md-3 ml-5 mr-5">
 END;
 
@@ -132,7 +139,6 @@ END;
                     $routeImg = $rootUri . 'img/' . $img;
                 }
 
-
                 echo
 <<<END
 <div class="col mb-4">
@@ -140,16 +146,21 @@ END;
   <img class="card-img-top m-auto" src="$routeImg" alt=$desc style="width: 17.9rem;height: 180px ">  
       <div class="card-body">
         <h5 class="card-title">$titre</h5>
-        <p class="card-text">$desc.</p>
-        <a href="$itemUrl" class="btn btn-primary">Réserver</a>
+        <p class="card-text">$desc.</p>        
 END;
                 if ($this->params['creator']){
                     $urlSupp = $this->app->urlFor('supprimer_item',['token_liste' => $this->params['token_liste'],'id_item' => $items['id']]);
                     echo
                     <<<END
-                        <a href="$urlSupp" class="btn btn-danger float-right">Supprimer</a>
+        <a href="$urlSupp" class="btn btn-danger">Supprimer</a>
 END;
                 }
+                else
+                    echo
+                    <<<END
+        <a href="$itemUrl" class="btn btn-primary">Réserver</a>
+END;
+
         echo <<<END
       </div>
   </div>

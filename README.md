@@ -1,4 +1,4 @@
-# S3A_MYWISHLIST_mayer_thommet_kesseiri
+﻿# S3A_MYWISHLIST_mayer_thommet_kesseiri
 
 Créer fichier /src/conf/conf.ini ->
 
@@ -30,7 +30,7 @@ Créer fichier /src/conf/conf.ini ->
  - La validation du formulaire enregistre la participation
  - Le nom du participant peut être mémorisé dans une variable de session ou un cookie pour pré-remplir le champ afin de ne pas avoir à le retaper
  
- 4)[] Ajouter un message avec sa réservation
+ 4)[x] Ajouter un message avec sa réservation
  - Dans la page de l'item, si l'item n'est pas réservé, le formulaire de participation permet également de saisir un message destiné le créateur
  - La validation du formulaire enregistre le message avec la participation
  
@@ -61,7 +61,7 @@ Créer fichier /src/conf/conf.ini ->
  - Le créateur d'une liste peut modifier les informations des items de ses listes 
  - Une fois réservé, un item ne peut plus être modifié
 
-10)[] Supprimer un item
+10)[x] Supprimer un item
  - Le créateur d'une liste peut supprimer un item d'un de ses listes si il n'est pas reservé
 
 11)[] Rajouter une image à un item
@@ -75,7 +75,7 @@ Créer fichier /src/conf/conf.ini ->
  - Le créateur d'une liste peut supprimer l'image de ses items
  - Dans le cas d'une image locale, le fichier de l'image n'est pas supprimé
 
-14)[] Partager une liste 
+14)[x] Partager une liste 
  - Une fois la liste entièrement saisie, le créateur peut la partager
  - Le partage d'une liste génère une URL avec un token (jeton unique différent du token de modification) destiné à être envoyé aux futurs participants
 
@@ -102,7 +102,7 @@ Créer fichier /src/conf/conf.ini ->
  - Seul le login ne peut pas être modifié
  - Si il modifie son mot de passe, il doit alors à nouveau s'authentifier
 
-20)[] Rendre une liste publique
+20)[x] Rendre une liste publique
  - Le créateur d'une liste peut la rendre publique 
  - Les listes publiques apparaissent dans la liste publique des listes de souhaits
 
