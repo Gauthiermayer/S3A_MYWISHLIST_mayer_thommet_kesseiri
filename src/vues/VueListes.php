@@ -4,6 +4,8 @@
 namespace mywishlist\vues;
 
 
+use mywishlist\controleurs\ControleurListes;
+use mywishlist\controleurs\ControleurMessage;
 use mywishlist\models\Item;
 
 class VueListes
@@ -20,6 +22,7 @@ class VueListes
         $this->params = $params;
         $this->app = \Slim\Slim::getInstance() ;
     }
+
 
 
     private function afficherToutesListes()
@@ -105,7 +108,7 @@ END;
 
         private function afficherAllItems(){
         if ($this->params != NULL) {
-            $titreListe = $this->params['titreListe'];#
+            $titreListe = $this->params['titreListe'];
             $rootUri = $this->app->request->getRootUri();
 
             echo
@@ -194,6 +197,8 @@ END;
 END;
 
         }
+
+        ControleurMessage::getMessages($this->params['token_liste']);
     }
 
     private function afficherItem(){

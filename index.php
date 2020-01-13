@@ -75,7 +75,10 @@ $app->get('/liste/:token_liste/item/:id_item/supprimerItem', function($token_lis
 })->name('supprimer_item');
 
 //------------------------ LISTE ------------------------\\
-
+$app->post('/liste/:token_liste/ajouterMessage', function($token_liste) {
+    \mywishlist\controleurs\ControleurMessage::ajouterMessage($token_liste);
+    ControleurListes::getAllItems($token_liste);
+})->name('ajouter_message');
 
 //------------------------ COMPTE ------------------------\\
 $app->get('/login', function() {
