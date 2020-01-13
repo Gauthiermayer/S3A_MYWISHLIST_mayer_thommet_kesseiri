@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Lun 13 Janvier 2020 à 18:55
+-- Généré le :  Lun 13 Janvier 2020 à 20:38
 -- Version du serveur :  5.7.11
 -- Version de PHP :  7.0.3
 
@@ -108,6 +108,20 @@ INSERT INTO `liste` (`token`, `titre`, `description`, `createur_pseudo`, `expira
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `message`
+--
+
+CREATE TABLE `message` (
+  `id_message` int(11) NOT NULL,
+  `tokenListe` varchar(15) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `message` varchar(240) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `reservation`
 --
 
@@ -145,6 +159,12 @@ ALTER TABLE `liste`
   ADD KEY `FK_createur_liste` (`createur_pseudo`);
 
 --
+-- Index pour la table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`id_message`);
+
+--
 -- Index pour la table `reservation`
 --
 ALTER TABLE `reservation`
@@ -159,7 +179,12 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT pour la table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+--
+-- AUTO_INCREMENT pour la table `message`
+--
+ALTER TABLE `message`
+  MODIFY `id_message` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Contraintes pour les tables exportées
 --
