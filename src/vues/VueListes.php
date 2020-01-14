@@ -4,9 +4,7 @@
 namespace mywishlist\vues;
 
 
-use mywishlist\controleurs\ControleurListes;
 use mywishlist\controleurs\ControleurMessage;
-use mywishlist\models\Item;
 
 class VueListes
 {
@@ -15,7 +13,7 @@ class VueListes
 
     /**
      * VueListe constructor.
-     * @param $liste
+     * @param $params
      */
     public function __construct($params)
     {
@@ -38,7 +36,7 @@ class VueListes
     <form action="$urlRechercheListes" method="post">
         <div class="row d-flex justify-content-center">               
             <div>
-                <input type="text" required class="form-control" placeholder="Pseudo de l'auteur" id="auteur" name="auteur">
+                <input type="text" title="Laissez vide pour rechercher toutes les listes" class="form-control" placeholder="Pseudo de l'auteur" id="auteur" name="auteur">
             </div>
             <p class="my-auto pl-2 pr-1">A partir de :</p>
             <div>                         

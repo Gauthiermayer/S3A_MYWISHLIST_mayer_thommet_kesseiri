@@ -117,7 +117,13 @@ class ControleurListes {
         switch ($_POST['typeRecherche']) {
             case 'auteur':
                 $auteur = $_POST['auteur'];
-                self::getListes(Liste::where('createur_pseudo', '=', $auteur)->get());
+
+                if ($auteur == 'Anonyme' || $auteur == 'anonyme')
+                    self::getListes(Liste::whereNull('createur_pseudo')->get());
+                else if ($auteur == '')
+                    self::getListes(Liste::get());
+                else
+                    self::getListes(Liste::where('createur_pseudo', '=', $auteur)->get());
                 break;
 
             case 'date':
