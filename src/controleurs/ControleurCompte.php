@@ -4,6 +4,7 @@
 namespace mywishlist\controleurs;
 
 
+use mywishlist\models\Compte;
 use mywishlist\utils\Authentification;
 use mywishlist\vues\VueCompte;
 
@@ -78,6 +79,15 @@ class ControleurCompte {
             default: //Erreur dans ce cas
                 $vue->afficherGestionCompteAvecInfo($status);
                 break;
+        }
+    }
+
+    public static function supprimer() {
+        if (isset($_SESSION['user_connected'])) {
+            $username = $_SESSION['user_connected']['username'];
+            $compte = Compte::find($username);
+            $compte->delete();
+            unset($_SESSION['user_connected']);
         }
     }
 }

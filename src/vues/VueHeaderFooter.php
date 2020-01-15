@@ -23,6 +23,7 @@ class VueHeaderFooter
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <link href="$rootUri/styles/bootstrap.css" rel="stylesheet" type="text/css">
             <link href="$rootUri/styles/header-footer.css" rel="stylesheet" type="text/css">
+            <link rel="icon" href="$rootUri/img/favicon.png"/>
 END;
 
         //------------------- Ajoute le css en param -------------------\\

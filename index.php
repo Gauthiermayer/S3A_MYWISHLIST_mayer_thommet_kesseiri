@@ -115,6 +115,11 @@ $app->post('/compte/modification', function () {
     $pass = $app->request->post('password');
     ControleurCompte::modifierInformations($pseudo, $pass);
 })->name('modificationCompte');
+
+$app->post('/login', function () {
+    ControleurCompte::supprimer();
+    ControleurCompte::pageConnexion();
+})->name('supprimerCompte');
 //------------------------ COMPTE ------------------------\\
 
 $app->run();

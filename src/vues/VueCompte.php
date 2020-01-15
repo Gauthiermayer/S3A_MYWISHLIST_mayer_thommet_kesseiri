@@ -143,7 +143,7 @@ END;
 
             $htmlPage =
                 <<<END
-                <div class="text-center container mt-5" style="max-width: 330px">
+                <div class="text-center container mt-3" style="max-width: 330px">
                     <!-- Formulaire modification compte -->
                     <form method="post" action="$urlModificationCompte">
                         <img class="mb-4" src="$rootUri/img/login.png" alt="" width="120" height="120">                    
@@ -172,7 +172,10 @@ END;
                 
                     <form method="get" action="$urlConnexion">
                         <button class="btn btn-primary btn-block">Se déconnecter</button>
-                    </form>               
+                    </form>  
+                    <form method="post" action="$urlConnexion">         
+                        <input type="submit" value="Supprimer le compte" class="btn btn-danger btn-block mt-1"></input>
+                    </form>
                 </div>
 END;
             echo $htmlPage;
