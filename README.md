@@ -34,11 +34,11 @@ Créer fichier /src/conf/conf.ini ->
  - Dans la page de l'item, si l'item n'est pas réservé, le formulaire de participation permet également de saisir un message destiné le créateur
  - La validation du formulaire enregistre le message avec la participation
  
- 5)[x] Ajouter un message sur une liste : **Gauthier**
+ 5) [x] Ajouter un message sur une liste : **Gauthier**
  - Dans la page d'une liste, un formulaire permet d'ajouter un message public rattaché à la liste
  - Les messages sur la liste seront affichés avec le détail de la liste
 
-##Créateur
+## Créateur
 
 6) [x] Créer une liste : **Gauthier**
  - Un utilisateur non authentifié peut créer une nouvelle liste de souhaits
@@ -87,7 +87,7 @@ Créer fichier /src/conf/conf.ini ->
 16) [x] Consulter les réservations et messages d'une de ses listes après échéance : **Mohammed & Sacha**
  - Après la date d'échéance de la liste, le créateur authentifié d'une liste partagée peut consulter les réservations effectuées sur sa liste avec les noms des participants et les message associés aux réservations
  
-##Extensions
+## Extensions
 
 17) [x] Créer un compte : **Sacha**
  - Tout utilisateur non inscrit peut créer un compte à l'aide d'un formulaire
