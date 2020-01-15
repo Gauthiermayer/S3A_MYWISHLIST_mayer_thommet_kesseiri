@@ -34,7 +34,7 @@ Créer fichier /src/conf/conf.ini ->
  - Dans la page de l'item, si l'item n'est pas réservé, le formulaire de participation permet également de saisir un message destiné le créateur
  - La validation du formulaire enregistre le message avec la participation
  
- 5)[] Ajouter un message sur une liste
+ 5)[x] Ajouter un message sur une liste
  - Dans la page d'une liste, un formulaire permet d'ajouter un message public rattaché à la liste
  - Les messages sur la liste seront affichés avec le détail de la liste
 
@@ -64,7 +64,7 @@ Créer fichier /src/conf/conf.ini ->
 10)[x] Supprimer un item
  - Le créateur d'une liste peut supprimer un item d'un de ses listes si il n'est pas reservé
 
-11)[] Rajouter une image à un item
+11)[x] Rajouter une image à un item
  - Le créateur d'une liste peut ajouter une image à un de ses items
  - Pour cela il fournit l'URL complète d'une image externe (acceptant le hot-linking) ou bien lechemin relatif d'une image déjà présente dans le dossier web/img/
 
@@ -79,13 +79,13 @@ Créer fichier /src/conf/conf.ini ->
  - Une fois la liste entièrement saisie, le créateur peut la partager
  - Le partage d'une liste génère une URL avec un token (jeton unique différent du token de modification) destiné à être envoyé aux futurs participants
 
-15)[] Consulter les réservations d'une de ses listes avant échéance
+15)[x] Consulter les réservations d'une de ses listes avant échéance
  - Le créateur d'une liste partagée peut consulter les réservations effectuées sur sa liste
  - Seul l'état réservé ou non s'affiche avant la date d'échéance
  - un cookie permet d'identifier le créateur de la liste qu'il soit authentifié ou non afin de cacherles noms des participants (seuls les participants voient les noms des autres participants). On suppose que le créateur accède à la liste avec son navigateur habituel (celui sur lequel il s'estdéjà authentifié)
 
 16)[] Consulter les réservations et messages d'une de ses listes après échéance
- - Après la date d'échéance de la liste, le créateur authentifié d'une liste partagée peut consulterles réservations effectuées sur sa liste avec les noms des participants et les message associés aux réservations
+ - Après la date d'échéance de la liste, le créateur authentifié d'une liste partagée peut consulter les réservations effectuées sur sa liste avec les noms des participants et les message associés aux réservations
  
 ##Extensions
 
@@ -132,7 +132,7 @@ Créer fichier /src/conf/conf.ini ->
 26)[] Afficher la liste des créateurs
  - Tous les utilisateurs peuvent consulter la liste des créateurs qui ont au moins une liste publique active jointe à leur compte.
 
-27)[] Supprimer son compte
+27)[x] Supprimer son compte
  - Tous les utilisateurs enregistrés peuvent supprimer leur compte
  - La suppression de son compte entraîne la suppression des listes, des items et images, des participations uniquement avant échéance et de tous les messages
 

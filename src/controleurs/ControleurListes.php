@@ -4,6 +4,7 @@
 namespace mywishlist\controleurs;
 
 
+use Cassandra\Date;
 use mywishlist\models\Item;
 use mywishlist\models\Liste;
 use mywishlist\models\Reservation;
@@ -28,11 +29,16 @@ class ControleurListes {
 
         foreach ($listes as $key => $liste){
             //Pour afficher : soit la liste n'est pas privée, soit son créateur est connecté
-            if( ($liste['private'] != 1 || ($userConnected == $liste['createur_pseudo']))
-                && date('Y-m-d') <= $liste['expiration']) { //N'affiche que les listes encore valides
+            if( ($liste['private'] != 1) && (date('Y-m-d') <= $liste['expiration'])) { //N'affiche que les listes encore valides
 
                 $nb_items = Item::all()->where('tokenListe', '=', $liste['token'])->count();
                 array_push($params['listes'], ['liste' => $liste, 'nb' => $nb_items]);
+            }
+            else {
+                if (($userConnected == $liste['createur_pseudo'])) {
+                    $nb_items = Item::all()->where('tokenListe', '=', $liste['token'])->count();
+                    array_push($params['listes'], ['liste' => $liste, 'nb' => $nb_items]);
+                }
             }
         }
 
@@ -90,8 +96,20 @@ class ControleurListes {
         $items = Item::all()->where('tokenListe','=',$token)->toArray();
 
         $isCreator = self::isCreator($token_liste);
+        if(isset($liste->createur_pseudo))
+            $nomCreateur = $liste->createur_pseudo;
+        else
+            $nomCreateur = 'Anonyme';
 
-        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'titreListe' => $liste->titre, 'token_liste' => $token]);
+        $dateCourante = date('Y-m-d');
+        $dateExpiration = $liste->expiration;
+        if ($dateCourante > $dateExpiration)
+            $expiration = true;
+        else
+            $expiration = false;
+
+        $vue = new VueListes(['items' => $items, 'creator' => $isCreator, 'titreListe' => $liste->titre,
+                                'token_liste' => $token, 'nomCreateur' => $nomCreateur, 'estExpiree' => $expiration]);
         $vue->afficher("liste");
     }
 

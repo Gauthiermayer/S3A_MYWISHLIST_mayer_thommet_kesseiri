@@ -5,6 +5,7 @@ namespace mywishlist\vues;
 
 
 use mywishlist\controleurs\ControleurMessage;
+use mywishlist\models\Reservation;
 
 class VueListes
 {
@@ -107,12 +108,13 @@ END;
         private function afficherAllItems(){
         if ($this->params != NULL) {
             $titreListe = $this->params['titreListe'];
+            $nomCreateur = $this->params['nomCreateur'];
             $rootUri = $this->app->request->getRootUri();
 
             echo
 <<<END
 <div class="text-center">
-<p class="h1">$titreListe</p>
+<p class="h1">$titreListe de $nomCreateur</p>
 <button id="partager" class="btn btn-primary">Partager la liste <i class="fas fa-share-square"></i></button>
 <script src="$rootUri/js/copyURLToClipboard.js"></script>
 </div>
@@ -150,10 +152,39 @@ END;
         <p class="card-text">$desc.</p>        
 END;
                 if ($this->params['creator']){
-                    $urlSupp = $this->app->urlFor('supprimer_item',['token_liste' => $this->params['token_liste'],'id_item' => $items['id']]);
+                    $tokenListe = $this->params['token_liste'];
+                    $urlSupp = $this->app->urlFor('supprimer_item',['token_liste' => $tokenListe,'id_item' => $items['id']]);
+                    $reserve = Reservation::where('tokenListe', '=', $tokenListe)->where('idItem', '=', $items['id'])->first();
+
+                    //date expirée
+                    if ($this->params['estExpiree']) {
+                        if (isset($reserve)) {
+                            $participant = $reserve->nomParticipant;
+                            if (!isset($participant) || $participant == '')
+                                $participant = 'Anonyme';
+                            $message = $reserve->message;
+
+                            $reserve = " btn-success\">Réservé par $participant<br>Message : $message";
+                        }
+                        else
+                            $reserve = ' btn-warning">Non réservé';
+                    }
+                    else {
+                        if (isset($reserve))
+                            $reserve = ' btn-success">Réservé';
+                        else
+                            $reserve = ' btn-warning">Non réservé';
+
+                        echo
+                        <<<END
+<a href="$urlSupp" class="btn btn-danger">Supprimer</a>
+END;
+
+                    }
+
                     echo
                     <<<END
-        <a href="$urlSupp" class="btn btn-danger">Supprimer</a>
+        <p class="btn mb-0 mr-3$reserve</p>
 END;
                 }
                 else

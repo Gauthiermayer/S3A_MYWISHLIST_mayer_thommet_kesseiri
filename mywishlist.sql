@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1
--- http://www.phpmyadmin.net
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
--- Client :  localhost
--- Généré le :  Lun 13 Janvier 2020 à 20:38
--- Version du serveur :  5.7.11
--- Version de PHP :  7.0.3
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  mer. 15 jan. 2020 à 08:29
+-- Version du serveur :  5.7.26
+-- Version de PHP :  7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `wishlist`
+-- Base de données :  `mywishlist`
 --
 
 -- --------------------------------------------------------
@@ -26,19 +28,22 @@ SET time_zone = "+00:00";
 -- Structure de la table `compte`
 --
 
-CREATE TABLE `compte` (
+DROP TABLE IF EXISTS `compte`;
+CREATE TABLE IF NOT EXISTS `compte` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `pseudo` varchar(20) NOT NULL,
-  `role` enum('admin','user') NOT NULL DEFAULT 'user'
+  `role` enum('admin','user') NOT NULL DEFAULT 'user',
+  PRIMARY KEY (`username`),
+  UNIQUE KEY `PSEUDO_UNIQUE` (`pseudo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `compte`
+-- Déchargement des données de la table `compte`
 --
 
 INSERT INTO `compte` (`username`, `password`, `pseudo`, `role`) VALUES
-('admin', '$2y$12$sUM0h57wSfuIItP6W7YC1OLK5nK/.YkL0LZDPFo/MJP3i9U4na0JC', 'admin57', 'user');
+('cgrqbfs', '$2y$12$bD30JF3bQIIfIZdRFgfxbOkiAS5yode3fXvzgeUTyehAtySJsE4eS', 'azerty', 'user');
 
 -- --------------------------------------------------------
 
@@ -46,18 +51,21 @@ INSERT INTO `compte` (`username`, `password`, `pseudo`, `role`) VALUES
 -- Structure de la table `item`
 --
 
-CREATE TABLE `item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `item`;
+CREATE TABLE IF NOT EXISTS `item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tokenListe` varchar(50) DEFAULT NULL,
   `nom` text NOT NULL,
   `descr` text,
   `img` text,
   `url` text,
-  `tarif` decimal(5,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `tarif` decimal(5,2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_Item_Liste` (`tokenListe`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `item`
+-- Déchargement des données de la table `item`
 --
 
 INSERT INTO `item` (`id`, `tokenListe`, `nom`, `descr`, `img`, `url`, `tarif`) VALUES
@@ -87,17 +95,20 @@ INSERT INTO `item` (`id`, `tokenListe`, `nom`, `descr`, `img`, `url`, `tarif`) V
 -- Structure de la table `liste`
 --
 
-CREATE TABLE `liste` (
+DROP TABLE IF EXISTS `liste`;
+CREATE TABLE IF NOT EXISTS `liste` (
   `token` varchar(50) NOT NULL,
   `titre` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `createur_pseudo` varchar(20) DEFAULT NULL,
   `expiration` date DEFAULT NULL,
-  `private` tinyint(1) DEFAULT '0'
+  `private` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`token`),
+  KEY `FK_createur_liste` (`createur_pseudo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `liste`
+-- Déchargement des données de la table `liste`
 --
 
 INSERT INTO `liste` (`token`, `titre`, `description`, `createur_pseudo`, `expiration`, `private`) VALUES
@@ -111,13 +122,24 @@ INSERT INTO `liste` (`token`, `titre`, `description`, `createur_pseudo`, `expira
 -- Structure de la table `message`
 --
 
-CREATE TABLE `message` (
-  `id_message` int(11) NOT NULL,
-  `tokenListe` varchar(15) NOT NULL,
-  `nom` varchar(50) NOT NULL,
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE IF NOT EXISTS `message` (
+  `id_message` int(11) NOT NULL AUTO_INCREMENT,
+  `tokenListe` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `nom` varchar(50) CHARACTER SET utf8 NOT NULL,
   `message` varchar(240) NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `date` date NOT NULL,
+  PRIMARY KEY (`id_message`),
+  KEY `FK_messageListe` (`tokenListe`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `message`
+--
+
+INSERT INTO `message` (`id_message`, `tokenListe`, `nom`, `message`, `date`) VALUES
+(1, 'nosecure1', 'Sacha', 'Sa', '2020-01-14'),
+(2, 'nosecure1', 'aazd', 'édazd', '2020-01-14');
 
 -- --------------------------------------------------------
 
@@ -125,68 +147,19 @@ CREATE TABLE `message` (
 -- Structure de la table `reservation`
 --
 
-CREATE TABLE `reservation` (
+DROP TABLE IF EXISTS `reservation`;
+CREATE TABLE IF NOT EXISTS `reservation` (
   `idItem` int(11) NOT NULL,
   `tokenListe` varchar(50) NOT NULL,
   `message` varchar(250) NOT NULL,
   `tokenReserv` varchar(100) NOT NULL,
-  `nomParticipant` varchar(50) NOT NULL
+  `nomParticipant` varchar(50) NOT NULL,
+  PRIMARY KEY (`idItem`,`tokenListe`),
+  KEY `FK_Reservation_Liste` (`tokenListe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Index pour les tables exportées
---
-
---
--- Index pour la table `compte`
---
-ALTER TABLE `compte`
-  ADD PRIMARY KEY (`username`),
-  ADD UNIQUE KEY `PSEUDO_UNIQUE` (`pseudo`);
-
---
--- Index pour la table `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_Item_Liste` (`tokenListe`);
-
---
--- Index pour la table `liste`
---
-ALTER TABLE `liste`
-  ADD PRIMARY KEY (`token`),
-  ADD KEY `FK_createur_liste` (`createur_pseudo`);
-
---
--- Index pour la table `message`
---
-ALTER TABLE `message`
-  ADD PRIMARY KEY (`id_message`);
-
---
--- Index pour la table `reservation`
---
-ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`idItem`,`tokenListe`),
-  ADD KEY `FK_Reservation_Liste` (`tokenListe`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `item`
---
-ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
---
--- AUTO_INCREMENT pour la table `message`
---
-ALTER TABLE `message`
-  MODIFY `id_message` int(11) NOT NULL AUTO_INCREMENT;
---
--- Contraintes pour les tables exportées
+-- Contraintes pour les tables déchargées
 --
 
 --
@@ -202,11 +175,18 @@ ALTER TABLE `liste`
   ADD CONSTRAINT `FK_createur_liste` FOREIGN KEY (`createur_pseudo`) REFERENCES `compte` (`pseudo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Contraintes pour la table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `FK_messageListe` FOREIGN KEY (`tokenListe`) REFERENCES `liste` (`token`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Contraintes pour la table `reservation`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `FK_Reservation_Item` FOREIGN KEY (`idItem`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_Reservation_Liste` FOREIGN KEY (`tokenListe`) REFERENCES `liste` (`token`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
